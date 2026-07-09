@@ -1,6 +1,12 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import StarBorder from "./StarBorder";
+import Magnet from "./Magnet";
+import ClickSpark from "./ClickSpark";
+import BentoCard from "./BentoCard";
+import SpotlightCard from "./SpotlightCard";
+import ElasticSlider from "./ElasticSlider";
 
 /**
  * Sadaqah Jariyah Impact Calculator — MATW brand theme (magenta #f60362 / blue #00a3da)
@@ -71,6 +77,15 @@ const FEATURED = {
     ref: "Sunan Ibn Majah 738 · Sahih (al-Albani)",
   },
 };
+
+// hex (#rrggbb) → "r, g, b" string, for use in rgba()/rgb() colors
+function hexToRgb(hex) {
+  const h = hex.replace("#", "");
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  return `${r}, ${g}, ${b}`;
+}
 
 function fmt(n) {
   if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(n % 1_000_000_000 === 0 ? 0 : 1) + "B";
@@ -153,6 +168,7 @@ export default function DonationImpactCalculator() {
   }
 
   const accent = mode === "well" ? BLUE : PINK;
+  const accentRgb = hexToRgb(accent);
   const featured = FEATURED[mode];
   const cartUrl = `${DONATE_BASE_URL}?fund=${FUND_SLUG[mode]}&amount=${amount}`;
 
@@ -163,33 +179,6 @@ export default function DonationImpactCalculator() {
         * { box-sizing: border-box; }
         .sjc-root { font-family: 'Manrope', sans-serif; }
         .sjc-mono { font-family: 'JetBrains Mono', monospace; }
-        .sjc-slider {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 100%;
-          height: 8px;
-          border-radius: 999px;
-          background: linear-gradient(90deg, var(--accent, ${PINK}) 0%, var(--accent, ${PINK}) var(--fill, 20%), #E4E9F0 var(--fill, 20%), #E4E9F0 100%);
-          outline: none;
-        }
-        .sjc-slider::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          background: var(--accent, ${PINK});
-          border: 3px solid #FFFFFF;
-          cursor: pointer;
-        }
-        .sjc-slider::-moz-range-thumb {
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          background: var(--accent, ${PINK});
-          border: 3px solid #FFFFFF;
-          cursor: pointer;
-        }
         .sjc-cta-btn:hover { opacity: 0.92; }
       `}</style>
 
@@ -227,15 +216,13 @@ export default function DonationImpactCalculator() {
               {amount.toLocaleString()}
             </span>
           </div>
-          <input
-            type="range"
-            className="sjc-slider"
+          <ElasticSlider
+            value={amount}
+            onChange={changeAmount}
             min={min}
             max={max}
             step={mode === "well" ? 25 : 250}
-            value={amount}
-            onChange={(e) => changeAmount(Number(e.target.value))}
-            style={{ "--fill": `${((amount - min) / (max - min)) * 100}%`, "--accent": accent }}
+            accentColor={accent}
           />
           <div style={styles.sliderMinMax}>
             <span>{CURRENCY}{min}</span>
@@ -245,41 +232,56 @@ export default function DonationImpactCalculator() {
 
         {/* Worldly impact — three across */}
         <div style={styles.resultsGrid}>
-          <div style={styles.resultCard}>
+          <BentoCard glowColor={accentRgb} style={styles.resultCard}>
             <div className="sjc-mono" style={resultNumber(accent)}>
               {fmt(impact.rate)}
             </div>
             <div style={styles.resultLabel}>
               {mode === "well" ? "people given clean water daily" : "worshippers the space holds"}
             </div>
-          </div>
-          <div style={styles.resultCard}>
+          </BentoCard>
+          <BentoCard glowColor={accentRgb} style={styles.resultCard}>
             <div className="sjc-mono" style={resultNumber(accent)}>
               {impact.lifespanYears.toFixed(0)}
             </div>
             <div style={styles.resultLabel}>years it keeps serving the community</div>
-          </div>
-          <div style={styles.resultCard}>
+          </BentoCard>
+          <BentoCard glowColor={accentRgb} style={styles.resultCard}>
             <div className="sjc-mono" style={resultNumber(accent)}>
               {mode === "well" ? fmt(litres) : fmt(actsOfWorship)}
             </div>
             <div style={styles.resultLabel}>
               {mode === "well" ? "litres of clean water, lifetime" : "acts of worship made possible, lifetime"}
             </div>
-          </div>
+          </BentoCard>
         </div>
 
         {/* CTA — appears only after the donor has actually engaged with the calculator */}
         {hasInteracted && (
-          <a
-            href={cartUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="sjc-cta-btn"
-            style={ctaButton(accent)}
+          <StarBorder
+            as="div"
+            className="sjc-cta-star-border"
+            style={{ marginBottom: 20 }}
+            colorTop={BLUE}
+            colorBottom={PINK}
+            thickness={2}
+            speed="4s"
+            innerStyle={{ borderRadius: 8, overflow: "hidden" }}
           >
-            Add to Cart — Donate {CURRENCY}{amount.toLocaleString()} Now
-          </a>
+            <Magnet padding={40} magnetStrength={10}>
+              <ClickSpark sparkColor={[PINK, BLUE]} sparkCount={10} sparkRadius={22} duration={500}>
+                <a
+                  href={cartUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="sjc-cta-btn"
+                  style={ctaButton(accent)}
+                >
+                  Add to Cart — Donate {CURRENCY}{amount.toLocaleString()} Now
+                </a>
+              </ClickSpark>
+            </Magnet>
+          </StarBorder>
         )}
 
         <div style={styles.disclaimer}>
@@ -304,11 +306,14 @@ export default function DonationImpactCalculator() {
           </div>
 
           {/* The single most specific promise for THIS deed */}
-          <div style={featuredCard(accent)}>
+          <SpotlightCard
+            style={{ borderLeft: `4px solid ${accent}`, marginBottom: 18 }}
+            spotlightColor={`rgba(${accentRgb}, 0.25)`}
+          >
             <span style={featuredBadge(accent)}>{featured.badge}</span>
             <p style={styles.featuredText}>“{featured.text}”</p>
             <span style={styles.featuredRef}>— {featured.ref}</span>
-          </div>
+          </SpotlightCard>
 
           <div style={styles.rewardVerse}>
             <p style={styles.rewardVerseText}>
@@ -332,19 +337,6 @@ export default function DonationImpactCalculator() {
 }
 
 // ── style helpers that depend on the active accent — flat, plain, no glow/gradient ──
-function featuredCard(color) {
-  return {
-    position: "relative",
-    borderRadius: 12,
-    padding: "16px 18px",
-    marginBottom: 18,
-    background: "#FFFFFF",
-    borderTop: "1px solid #E4E9F0",
-    borderRight: "1px solid #E4E9F0",
-    borderBottom: "1px solid #E4E9F0",
-    borderLeft: `4px solid ${color}`,
-  };
-}
 function featuredBadge(color) {
   return {
     display: "inline-block",
@@ -390,9 +382,8 @@ function ctaButton(color) {
     color: "#FFFFFF",
     fontSize: 15,
     fontWeight: 700,
-    borderRadius: 10,
+    borderRadius: 8,
     padding: "16px 20px",
-    marginBottom: 20,
   };
 }
 

@@ -1,0 +1,33 @@
+.bento-card {
+  position: relative;
+  overflow: hidden;
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --glow-intensity: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bento-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    140px circle at var(--glow-x) var(--glow-y),
+    rgba(var(--glow-color), calc(var(--glow-intensity) * 0.35)) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bento-card:hover::after {
+  opacity: 1;
+}
+
+.bento-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(var(--glow-color), 0.18);
+}
