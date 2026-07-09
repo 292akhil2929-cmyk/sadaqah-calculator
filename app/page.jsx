@@ -50,52 +50,9 @@ const MASJID_ANCHORS = [
   { cost: 37500, capacity: 550, lifespanYears: 50 },
 ];
 
-const CASE_STUDIES = [
-  { place: "Rural South Togo", type: "Hand-pump well, 40m deep", people: 100, years: 20 },
-  { place: "Rural Togo", type: "Heavy-duty hand pump, 40 households", people: 200, years: 50 },
-  { place: "Pallisa, Uganda", type: "Heavy-duty hand pump, 92 households", people: 460, years: 20 },
-];
-
 // Qur'an 2:261 — the reward multiplier that we can actually quote a number for.
 // A grain grows 7 ears, each ear 100 grains → 700× minimum, "and Allah multiplies for whom He wills."
 const REWARD_MULTIPLIER = 700;
-
-// Mode-specific texts. Each carries a real NUMBER so the reward feels concrete.
-const REWARD_TEXTS = {
-  well: [
-    {
-      badge: "THE #1 CHARITY",
-      text: "Sa'd asked, \"Which charity is best?\" The Prophet ﷺ said, \"Water.\"",
-      ref: "Sunan al-Nasa'i 3664 · Hasan",
-    },
-    {
-      badge: "1 OF 7 DEEDS",
-      text:
-        "Seven deeds keep rewarding a servant in his grave after death — among them: digging a well.",
-      ref: "Sahih al-Jami' 3602 · Hasan",
-    },
-    {
-      badge: "PRICE OF PARADISE",
-      text:
-        "\"Who will dig the well of Rumah, and his bucket will be alongside the buckets of the Muslims, for something better than it in Paradise?\" — so Uthman (ra) bought it.",
-      ref: "Jami' at-Tirmidhi 3703",
-    },
-  ],
-  masjid: [
-    {
-      badge: "A HOUSE IN PARADISE",
-      text:
-        "\"Whoever builds a mosque for Allah, Allah will build for him a house like it in Paradise.\"",
-      ref: "Sahih al-Bukhari 450 / Sahih Muslim 533",
-    },
-    {
-      badge: "1 OF 7 DEEDS",
-      text:
-        "Seven deeds keep rewarding a servant in his grave after death — among them: building a mosque.",
-      ref: "Sahih al-Jami' 3602 · Hasan",
-    },
-  ],
-};
 
 // The ONE narration that speaks most specifically to each mode — shown as the
 // headline proof inside the reward panel. Both come from the same hadith of
@@ -209,7 +166,6 @@ export default function DonationImpactCalculator() {
 
   const accent = mode === "well" ? BLUE : PINK;
   const verse = VERSE[mode];
-  const rewardTexts = REWARD_TEXTS[mode];
   const featured = FEATURED[mode];
   const cartUrl = `${DONATE_BASE_URL}?fund=${FUND_SLUG[mode]}&amount=${amount}`;
 
@@ -251,7 +207,6 @@ export default function DonationImpactCalculator() {
       `}</style>
 
       <div className="sjc-root" style={styles.wrap}>
-        <div style={styles.eyebrow}>SADAQAH JARIYAH · IMPACT CALCULATOR</div>
         <h1 style={styles.h1}>See what your Sadaqah builds</h1>
         <p style={styles.sub}>
           Some of your impact can be measured. The rest — the reward — is promised in the
@@ -381,17 +336,6 @@ export default function DonationImpactCalculator() {
             7 ears × 100 grains = <b style={{ color: "#fff" }}>700× the reward</b> as a floor —
             and Allah multiplies without limit for whom He wills.
           </div>
-
-          {/* Mode-specific numbered proofs */}
-          <div style={styles.proofGrid}>
-            {rewardTexts.map((q, i) => (
-              <div key={i} style={styles.proofCard}>
-                <span style={proofBadge(accent)}>{q.badge}</span>
-                <p style={styles.proofText}>{q.text}</p>
-                <span style={styles.proofRef}>{q.ref}</span>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Short worldly verse */}
@@ -399,22 +343,6 @@ export default function DonationImpactCalculator() {
           <p style={styles.quoteText}>
             "{verse.text}" <span style={styles.quoteRef}>({verse.ref})</span>
           </p>
-        </div>
-
-        {/* Case studies */}
-        <div style={styles.sectionDivider} />
-        <h2 style={styles.h2}>Wells MATW has actually built</h2>
-        <div style={styles.caseGrid}>
-          {CASE_STUDIES.map((c, i) => (
-            <div key={i} style={styles.caseCard}>
-              <div style={styles.casePlace}>{c.place}</div>
-              <div style={styles.caseType}>{c.type}</div>
-              <div style={caseStats(accent)}>
-                <span className="sjc-mono">{c.people}</span> people/day ·{" "}
-                <span className="sjc-mono">{c.years}</span> yr lifespan
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </div>
@@ -429,10 +357,10 @@ function featuredCard(color) {
     padding: "16px 18px",
     marginBottom: 18,
     background: "#FFFFFF",
+    borderTop: "1px solid #E4E9F0",
+    borderRight: "1px solid #E4E9F0",
+    borderBottom: "1px solid #E4E9F0",
     borderLeft: `4px solid ${color}`,
-    border: "1px solid #E4E9F0",
-    borderLeftWidth: 4,
-    borderLeftColor: color,
   };
 }
 function featuredBadge(color) {
@@ -471,23 +399,6 @@ function resultNumber(color) {
     display: "inline-block",
   };
 }
-function proofBadge(color) {
-  return {
-    display: "inline-block",
-    fontFamily: "'JetBrains Mono', monospace",
-    fontSize: 9.5,
-    letterSpacing: "0.1em",
-    fontWeight: 700,
-    color: "#fff",
-    background: color,
-    borderRadius: 4,
-    padding: "3px 9px",
-    marginBottom: 10,
-  };
-}
-function caseStats(color) {
-  return { fontSize: 12.5, color, fontWeight: 700 };
-}
 function ctaButton(color) {
   return {
     display: "block",
@@ -512,14 +423,6 @@ const styles = {
     maxWidth: 720,
     margin: "0 auto",
     padding: "40px 20px 48px",
-  },
-  eyebrow: {
-    fontFamily: "'JetBrains Mono', monospace",
-    fontSize: 11,
-    letterSpacing: "0.14em",
-    color: PINK,
-    marginBottom: 10,
-    fontWeight: 700,
   },
   h1: {
     fontSize: "clamp(24px, 5vw, 40px)",
@@ -705,31 +608,6 @@ const styles = {
     fontSize: 11.5,
     color: "#5A6B7A",
   },
-  proofGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
-    gap: 10,
-  },
-  proofCard: {
-    background: "#FFFFFF",
-    border: "1px solid #E4E9F0",
-    borderRadius: 10,
-    padding: "14px 14px 12px",
-    display: "flex",
-    flexDirection: "column",
-  },
-  proofText: {
-    fontSize: 13,
-    lineHeight: 1.5,
-    color: INK,
-    margin: "0 0 10px",
-    flex: 1,
-  },
-  proofRef: {
-    fontFamily: "'JetBrains Mono', monospace",
-    fontSize: 10.5,
-    color: "#8A97A5",
-  },
 
   quoteCard: {
     borderLeft: `3px solid ${BLUE}`,
@@ -750,32 +628,5 @@ const styles = {
     fontSize: 12,
     color: BLUE,
     fontStyle: "normal",
-  },
-  sectionDivider: {
-    height: 1,
-    background: "#E4E9F0",
-    margin: "32px 0 20px",
-  },
-  caseGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
-    gap: 12,
-  },
-  caseCard: {
-    border: "1px solid #E4E9F0",
-    borderRadius: 10,
-    padding: "14px 16px",
-    background: "#F5F7FA",
-  },
-  casePlace: {
-    fontWeight: 700,
-    fontSize: 14,
-    marginBottom: 3,
-    color: INK,
-  },
-  caseType: {
-    fontSize: 12,
-    color: "#5A6B7A",
-    marginBottom: 10,
   },
 };
