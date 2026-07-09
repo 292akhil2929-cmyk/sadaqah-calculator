@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import StarBorder from "./StarBorder";
 import Magnet from "./Magnet";
 import ClickSpark from "./ClickSpark";
 import BentoCard from "./BentoCard";
@@ -258,16 +257,7 @@ export default function DonationImpactCalculator() {
 
         {/* CTA — appears only after the donor has actually engaged with the calculator */}
         {hasInteracted && (
-          <StarBorder
-            as="div"
-            className="sjc-cta-star-border"
-            style={{ marginBottom: 20 }}
-            colorTop={BLUE}
-            colorBottom={PINK}
-            thickness={2}
-            speed="4s"
-            innerStyle={{ borderRadius: 8, overflow: "hidden" }}
-          >
+          <div style={{ marginBottom: 20 }}>
             <Magnet padding={40} magnetStrength={10}>
               <ClickSpark sparkColor={[PINK, BLUE]} sparkCount={10} sparkRadius={22} duration={500}>
                 <a
@@ -281,7 +271,7 @@ export default function DonationImpactCalculator() {
                 </a>
               </ClickSpark>
             </Magnet>
-          </StarBorder>
+          </div>
         )}
 
         <div style={styles.disclaimer}>
@@ -307,7 +297,7 @@ export default function DonationImpactCalculator() {
 
           {/* The single most specific promise for THIS deed */}
           <SpotlightCard
-            style={{ borderLeft: `4px solid ${accent}`, marginBottom: 18 }}
+            style={quoteCardStyle(accent)}
             spotlightColor={`rgba(${accentRgb}, 0.25)`}
           >
             <span style={featuredBadge(accent)}>{featured.badge}</span>
@@ -315,21 +305,26 @@ export default function DonationImpactCalculator() {
             <span style={styles.featuredRef}>— {featured.ref}</span>
           </SpotlightCard>
 
-          <div style={styles.rewardVerse}>
-            <p style={styles.rewardVerseText}>
+          {/* The multiplier verse — same card template, same accent, so both read as one family */}
+          <SpotlightCard
+            style={quoteCardStyle(accent, 0)}
+            spotlightColor={`rgba(${accentRgb}, 0.25)`}
+          >
+            <span style={featuredBadge(accent)}>THE MULTIPLIER</span>
+            <p style={styles.featuredText}>
               "The example of those who spend their wealth in the way of Allah is like a seed
               which grows <b style={{ color: INK }}>seven ears</b>, in each ear{" "}
               <b style={{ color: INK }}>a hundred grains</b>. And Allah multiplies for whom
               He wills."
             </p>
-            <span style={styles.rewardVerseRef}>— Qur'an 2:261 · Sahih International</span>
-          </div>
-          <div style={styles.rewardMathNote}>
-            7 ears × 100 grains = <b style={{ color: INK }}>700× the reward</b> as a floor —
-            applied to every{" "}
-            {mode === "well" ? "person-day of water this well provides" : "prayer prayed inside this masjid"}
-            {" "}over its lifetime. Allah multiplies without limit for whom He wills.
-          </div>
+            <span style={styles.featuredRef}>— Qur'an 2:261 · Sahih International</span>
+            <div style={styles.rewardMathNote}>
+              7 ears × 100 grains = <b style={{ color: INK }}>700× the reward</b> as a floor —
+              applied to every{" "}
+              {mode === "well" ? "person-day of water this well provides" : "prayer prayed inside this masjid"}
+              {" "}over its lifetime. Allah multiplies without limit for whom He wills.
+            </div>
+          </SpotlightCard>
         </div>
       </div>
     </div>
@@ -337,6 +332,13 @@ export default function DonationImpactCalculator() {
 }
 
 // ── style helpers that depend on the active accent — flat, plain, no glow/gradient ──
+// Same card template for both quote blocks so they read as one uniform family.
+function quoteCardStyle(color, marginBottom = 12) {
+  return {
+    borderLeft: `4px solid ${color}`,
+    marginBottom,
+  };
+}
 function featuredBadge(color) {
   return {
     display: "inline-block",
@@ -543,30 +545,11 @@ const styles = {
     marginBottom: 18,
     maxWidth: 520,
   },
-  rewardVerse: {
-    borderLeft: `3px solid ${BLUE}`,
-    paddingLeft: 14,
-    marginBottom: 12,
-  },
-  rewardVerseText: {
-    fontSize: 15,
-    lineHeight: 1.6,
-    fontStyle: "italic",
-    color: INK,
-    margin: 0,
-  },
-  rewardVerseRef: {
-    display: "inline-block",
-    marginTop: 6,
-    fontFamily: "'JetBrains Mono', monospace",
-    fontSize: 11.5,
-    color: BLUE,
-  },
   rewardMathNote: {
     fontSize: 12,
     lineHeight: 1.5,
     color: "#5A6B7A",
-    marginBottom: 18,
+    marginTop: 12,
   },
   featuredText: {
     fontSize: 16,
