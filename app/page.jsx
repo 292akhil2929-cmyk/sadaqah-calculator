@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import Magnet from "./Magnet";
 import ClickSpark from "./ClickSpark";
 import GlowCard from "./GlowCard";
 import ElasticSlider from "./ElasticSlider";
 import ShinyButton from "./ShinyButton";
+import InteractiveHoverButton from "./InteractiveHoverButton";
 
 /**
  * Sadaqah Jariyah Impact Calculator — MATW brand theme (magenta #f60362 / blue #00a3da)
@@ -255,19 +255,18 @@ export default function DonationImpactCalculator() {
         {/* CTA — appears only after the donor has actually engaged with the calculator */}
         {hasInteracted && (
           <div style={{ marginBottom: 20 }}>
-            <Magnet padding={40} magnetStrength={10}>
-              <ClickSpark sparkColor={[PINK, BLUE]} sparkCount={10} sparkRadius={22} duration={500}>
-                <ShinyButton
-                  as="a"
-                  href={cartUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={ctaButton(accent)}
-                >
-                  Add to Cart — Donate {CURRENCY}{amount.toLocaleString()} Now
-                </ShinyButton>
-              </ClickSpark>
-            </Magnet>
+            <ClickSpark sparkColor={[PINK, BLUE]} sparkCount={10} sparkRadius={22} duration={500}>
+              <InteractiveHoverButton
+                as="a"
+                href={cartUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                accentColor={accent}
+                style={{ padding: "16px 20px", fontSize: 15, fontWeight: 700 }}
+              >
+                Add to Cart — Donate {CURRENCY}{amount.toLocaleString()} Now
+              </InteractiveHoverButton>
+            </ClickSpark>
           </div>
         )}
 
@@ -370,20 +369,6 @@ function resultNumber(color) {
     display: "inline-block",
   };
 }
-function ctaButton(color) {
-  return {
-    display: "block",
-    textAlign: "center",
-    textDecoration: "none",
-    background: color,
-    color: "#FFFFFF",
-    fontSize: 15,
-    fontWeight: 700,
-    borderRadius: 8,
-    padding: "16px 20px",
-  };
-}
-
 const styles = {
   page: {
     background: "#FFFFFF",
