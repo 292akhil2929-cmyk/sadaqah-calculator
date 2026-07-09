@@ -3,9 +3,9 @@
 import React, { useState, useMemo } from "react";
 import Magnet from "./Magnet";
 import ClickSpark from "./ClickSpark";
-import BentoCard from "./BentoCard";
-import SpotlightCard from "./SpotlightCard";
+import GlowCard from "./GlowCard";
 import ElasticSlider from "./ElasticSlider";
+import ShinyButton from "./ShinyButton";
 
 /**
  * Sadaqah Jariyah Impact Calculator — MATW brand theme (magenta #f60362 / blue #00a3da)
@@ -178,7 +178,6 @@ export default function DonationImpactCalculator() {
         * { box-sizing: border-box; }
         .sjc-root { font-family: 'Manrope', sans-serif; }
         .sjc-mono { font-family: 'JetBrains Mono', monospace; }
-        .sjc-cta-btn:hover { opacity: 0.92; }
       `}</style>
 
       <div className="sjc-root" style={styles.wrap}>
@@ -190,20 +189,18 @@ export default function DonationImpactCalculator() {
 
         {/* Mode toggle */}
         <div style={styles.modeRow}>
-          <button
-            className="sjc-mode-btn"
+          <ShinyButton
             style={mode === "well" ? modeBtnActive(BLUE) : styles.modeBtn}
             onClick={() => switchMode("well")}
           >
             💧 Water Well
-          </button>
-          <button
-            className="sjc-mode-btn"
+          </ShinyButton>
+          <ShinyButton
             style={mode === "masjid" ? modeBtnActive(PINK) : styles.modeBtn}
             onClick={() => switchMode("masjid")}
           >
             🕌 Masjid
-          </button>
+          </ShinyButton>
         </div>
 
         {/* Slider — front and center */}
@@ -231,28 +228,28 @@ export default function DonationImpactCalculator() {
 
         {/* Worldly impact — three across */}
         <div style={styles.resultsGrid}>
-          <BentoCard glowColor={accentRgb} style={styles.resultCard}>
+          <GlowCard glowColor={accentRgb} style={styles.resultCard}>
             <div className="sjc-mono" style={resultNumber(accent)}>
               {fmt(impact.rate)}
             </div>
             <div style={styles.resultLabel}>
               {mode === "well" ? "people given clean water daily" : "worshippers the space holds"}
             </div>
-          </BentoCard>
-          <BentoCard glowColor={accentRgb} style={styles.resultCard}>
+          </GlowCard>
+          <GlowCard glowColor={accentRgb} style={styles.resultCard}>
             <div className="sjc-mono" style={resultNumber(accent)}>
               {impact.lifespanYears.toFixed(0)}
             </div>
             <div style={styles.resultLabel}>years it keeps serving the community</div>
-          </BentoCard>
-          <BentoCard glowColor={accentRgb} style={styles.resultCard}>
+          </GlowCard>
+          <GlowCard glowColor={accentRgb} style={styles.resultCard}>
             <div className="sjc-mono" style={resultNumber(accent)}>
               {mode === "well" ? fmt(litres) : fmt(actsOfWorship)}
             </div>
             <div style={styles.resultLabel}>
               {mode === "well" ? "litres of clean water, lifetime" : "acts of worship made possible, lifetime"}
             </div>
-          </BentoCard>
+          </GlowCard>
         </div>
 
         {/* CTA — appears only after the donor has actually engaged with the calculator */}
@@ -260,15 +257,15 @@ export default function DonationImpactCalculator() {
           <div style={{ marginBottom: 20 }}>
             <Magnet padding={40} magnetStrength={10}>
               <ClickSpark sparkColor={[PINK, BLUE]} sparkCount={10} sparkRadius={22} duration={500}>
-                <a
+                <ShinyButton
+                  as="a"
                   href={cartUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="sjc-cta-btn"
                   style={ctaButton(accent)}
                 >
                   Add to Cart — Donate {CURRENCY}{amount.toLocaleString()} Now
-                </a>
+                </ShinyButton>
               </ClickSpark>
             </Magnet>
           </div>
@@ -296,20 +293,14 @@ export default function DonationImpactCalculator() {
           </div>
 
           {/* The single most specific promise for THIS deed */}
-          <SpotlightCard
-            style={quoteCardStyle(accent)}
-            spotlightColor={`rgba(${accentRgb}, 0.25)`}
-          >
+          <GlowCard glowColor={accentRgb} style={quoteCardStyle(accent)}>
             <span style={featuredBadge(accent)}>{featured.badge}</span>
             <p style={styles.featuredText}>“{featured.text}”</p>
             <span style={styles.featuredRef}>— {featured.ref}</span>
-          </SpotlightCard>
+          </GlowCard>
 
           {/* The multiplier verse — same card template, same accent, so both read as one family */}
-          <SpotlightCard
-            style={quoteCardStyle(accent, 0)}
-            spotlightColor={`rgba(${accentRgb}, 0.25)`}
-          >
+          <GlowCard glowColor={accentRgb} style={quoteCardStyle(accent, 0)}>
             <span style={featuredBadge(accent)}>THE MULTIPLIER</span>
             <p style={styles.featuredText}>
               "The example of those who spend their wealth in the way of Allah is like a seed
@@ -324,7 +315,7 @@ export default function DonationImpactCalculator() {
               {mode === "well" ? "person-day of water this well provides" : "prayer prayed inside this masjid"}
               {" "}over its lifetime. Allah multiplies without limit for whom He wills.
             </div>
-          </SpotlightCard>
+          </GlowCard>
         </div>
       </div>
     </div>
@@ -335,7 +326,11 @@ export default function DonationImpactCalculator() {
 // Same card template for both quote blocks so they read as one uniform family.
 function quoteCardStyle(color, marginBottom = 12) {
   return {
+    background: "#FFFFFF",
+    border: "1px solid #E4E9F0",
     borderLeft: `4px solid ${color}`,
+    borderRadius: 12,
+    padding: "16px 18px",
     marginBottom,
   };
 }

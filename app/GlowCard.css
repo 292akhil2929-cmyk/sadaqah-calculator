@@ -1,0 +1,39 @@
+.glow-card {
+  position: relative;
+  isolation: isolate;
+  --mx: 50%;
+  --my: 50%;
+}
+
+.glow-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: radial-gradient(180px circle at var(--mx) var(--my), rgb(var(--glow-color)), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.glow-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(160px circle at var(--mx) var(--my), rgba(var(--glow-color), 0.12), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glow-card:hover::before,
+.glow-card:hover::after {
+  opacity: 1;
+}

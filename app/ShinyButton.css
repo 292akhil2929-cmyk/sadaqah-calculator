@@ -1,0 +1,40 @@
+.shiny-button {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  cursor: pointer;
+}
+
+.shiny-button-content {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.shiny-button-sweep {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.55) 48%,
+    rgba(255, 255, 255, 0.55) 52%,
+    transparent 70%
+  );
+  background-size: 250% 100%;
+  animation: shiny-sweep 3.2s ease-in-out infinite;
+}
+
+@keyframes shiny-sweep {
+  0% {
+    background-position: 150% 0;
+  }
+  55% {
+    background-position: -50% 0;
+  }
+  100% {
+    background-position: -50% 0;
+  }
+}

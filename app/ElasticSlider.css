@@ -47,8 +47,36 @@
 }
 
 .elastic-slider-range {
-  position: absolute;
+  position: relative;
   height: 100%;
   background-color: var(--elastic-accent, #e6007e);
   border-radius: 9999px;
+  overflow: hidden;
+}
+
+.elastic-slider-range::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.55) 48%,
+    rgba(255, 255, 255, 0.55) 52%,
+    transparent 70%
+  );
+  background-size: 250% 100%;
+  animation: shiny-sweep 3.2s ease-in-out infinite;
+}
+
+@keyframes shiny-sweep {
+  0% {
+    background-position: 150% 0;
+  }
+  55% {
+    background-position: -50% 0;
+  }
+  100% {
+    background-position: -50% 0;
+  }
 }
