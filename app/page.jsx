@@ -3,7 +3,6 @@
 import React, { useState, useMemo } from "react";
 import ClickSpark from "./ClickSpark";
 import GlowCard from "./GlowCard";
-import ElasticSlider from "./ElasticSlider";
 import ShinyButton from "./ShinyButton";
 import InteractiveHoverButton from "./InteractiveHoverButton";
 
@@ -180,6 +179,33 @@ export default function DonationImpactCalculator() {
         * { box-sizing: border-box; }
         .sjc-root { font-family: 'Manrope', sans-serif; }
         .sjc-mono { font-family: 'JetBrains Mono', monospace; }
+        .sjc-slider {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 100%;
+          height: 8px;
+          border-radius: 999px;
+          background: linear-gradient(90deg, var(--accent, #e6007e) 0%, var(--accent, #e6007e) var(--fill, 20%), #E4E9F0 var(--fill, 20%), #E4E9F0 100%);
+          outline: none;
+        }
+        .sjc-slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          background: #FFFFFF;
+          border: 3px solid var(--accent, #e6007e);
+          cursor: pointer;
+        }
+        .sjc-slider::-moz-range-thumb {
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          background: #FFFFFF;
+          border: 3px solid var(--accent, #e6007e);
+          cursor: pointer;
+        }
       `}</style>
 
       <div className="sjc-root" style={styles.wrap}>
@@ -214,13 +240,15 @@ export default function DonationImpactCalculator() {
               {amount.toLocaleString()}
             </span>
           </div>
-          <ElasticSlider
-            value={amount}
-            onChange={changeAmount}
+          <input
+            type="range"
+            className="sjc-slider"
             min={min}
             max={max}
             step={mode === "well" ? 25 : 250}
-            accentColor={accent}
+            value={amount}
+            onChange={(e) => changeAmount(Number(e.target.value))}
+            style={{ "--fill": `${((amount - min) / (max - min)) * 100}%`, "--accent": accent }}
           />
           <div style={styles.sliderMinMax}>
             <span>{CURRENCY}{min}</span>

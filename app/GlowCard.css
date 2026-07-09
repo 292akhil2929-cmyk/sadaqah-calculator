@@ -26,24 +26,6 @@
   z-index: 2;
 }
 
-.glow-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    170px circle at var(--mx) var(--my),
-    rgba(var(--glow-from), 0.14) 0%,
-    rgba(var(--glow-to), 0.12) 55%,
-    transparent 75%
-  );
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.glow-card:hover::before,
-.glow-card:hover::after {
+.glow-card:hover::before {
   opacity: 1;
 }
