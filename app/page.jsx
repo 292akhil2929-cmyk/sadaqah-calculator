@@ -29,9 +29,9 @@ import React, { useState, useMemo, useEffect } from "react";
 
 const CURRENCY = "$";
 
-// MATW brand palette
-const PINK = "#f60362";
-const BLUE = "#00a3da";
+// MATW brand palette — sampled from the live site's blue nav + magenta band
+const PINK = "#e6007e";
+const BLUE = "#3aa0da";
 
 const WELL_ANCHORS = [
   { cost: 500, peoplePerDay: 100, lifespanYears: 12 },
@@ -89,6 +89,24 @@ const REWARD_TEXTS = {
       ref: "Sahih al-Jami' 3602 · Hasan",
     },
   ],
+};
+
+// The ONE narration that speaks most specifically to each mode — shown as the
+// headline proof inside the reward panel. Both come from the same hadith of
+// Jabir ibn 'Abdullah (ra), which promises a distinct reward for each deed.
+const FEATURED = {
+  well: {
+    badge: "EVERY SIP IS COUNTED",
+    text:
+      "Whoever digs a well — no thirsty being, jinn, human, or bird, drinks from it except that Allah rewards him for it on the Day of Resurrection.",
+    ref: "Sunan Ibn Majah · Sahih Ibn Khuzaymah 1292",
+  },
+  masjid: {
+    badge: "EVEN THE SMALLEST",
+    text:
+      "Whoever builds a mosque for Allah — even the size of a sandgrouse's nest, or smaller — Allah builds for him a house in Paradise.",
+    ref: "Sunan Ibn Majah 738 · Sahih (al-Albani)",
+  },
 };
 
 // Short verse shown right beside the worldly stat, per mode.
@@ -186,6 +204,7 @@ export default function DonationImpactCalculator() {
   const accent = mode === "well" ? BLUE : PINK;
   const verse = VERSE[mode];
   const rewardTexts = REWARD_TEXTS[mode];
+  const featured = FEATURED[mode];
 
   return (
     <div style={styles.page}>
@@ -200,7 +219,7 @@ export default function DonationImpactCalculator() {
           width: 100%;
           height: 8px;
           border-radius: 999px;
-          background: linear-gradient(90deg, ${PINK} 0%, ${PINK} var(--fill, 20%), rgba(255,255,255,0.14) var(--fill, 20%), rgba(255,255,255,0.14) 100%);
+          background: linear-gradient(90deg, var(--accent, ${PINK}) 0%, var(--accent, ${PINK}) var(--fill, 20%), rgba(255,255,255,0.14) var(--fill, 20%), rgba(255,255,255,0.14) 100%);
           outline: none;
         }
         .sjc-slider::-webkit-slider-thumb {
@@ -210,16 +229,16 @@ export default function DonationImpactCalculator() {
           height: 26px;
           border-radius: 50%;
           background: #FFFFFF;
-          border: 4px solid ${PINK};
+          border: 4px solid var(--accent, ${PINK});
           cursor: pointer;
-          box-shadow: 0 2px 10px rgba(246,3,98,0.5);
+          box-shadow: 0 2px 12px var(--accent, ${PINK});
         }
         .sjc-slider::-moz-range-thumb {
           width: 26px;
           height: 26px;
           border-radius: 50%;
           background: #FFFFFF;
-          border: 4px solid ${PINK};
+          border: 4px solid var(--accent, ${PINK});
           cursor: pointer;
         }
         .sjc-mode-btn { transition: all 0.2s ease; }
@@ -300,7 +319,7 @@ export default function DonationImpactCalculator() {
             step={mode === "well" ? 25 : 250}
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
-            style={{ "--fill": `${((amount - min) / (max - min)) * 100}%` }}
+            style={{ "--fill": `${((amount - min) / (max - min)) * 100}%`, "--accent": accent }}
           />
           <div style={styles.sliderMinMax}>
             <span>{CURRENCY}{min}</span>
@@ -353,6 +372,13 @@ export default function DonationImpactCalculator() {
             {mode === "well"
               ? "acts of ongoing charity, multiplied — credited to you for every person who drinks, every day it flows"
               : "rewards of worship, multiplied — credited to you for every prayer prayed inside it"}
+          </div>
+
+          {/* The single most specific promise for THIS deed */}
+          <div style={featuredCard(accent)}>
+            <span style={featuredBadge(accent)}>{featured.badge}</span>
+            <p style={styles.featuredText}>“{featured.text}”</p>
+            <span style={styles.featuredRef}>— {featured.ref}</span>
           </div>
 
           <div style={styles.rewardVerse}>
@@ -409,6 +435,31 @@ export default function DonationImpactCalculator() {
 }
 
 // ── style helpers that depend on the active accent ──
+function featuredCard(color) {
+  return {
+    position: "relative",
+    borderRadius: 14,
+    padding: "16px 18px",
+    marginBottom: 18,
+    background: `linear-gradient(135deg, ${hexA(color, 0.16)} 0%, ${hexA(color, 0.05)} 100%)`,
+    border: `1px solid ${hexA(color, 0.45)}`,
+    boxShadow: `0 0 26px ${hexA(color, 0.16)}`,
+  };
+}
+function featuredBadge(color) {
+  return {
+    display: "inline-block",
+    fontFamily: "'JetBrains Mono', monospace",
+    fontSize: 10,
+    letterSpacing: "0.12em",
+    fontWeight: 700,
+    color: "#fff",
+    background: color,
+    borderRadius: 999,
+    padding: "4px 11px",
+    marginBottom: 12,
+  };
+}
 function modeBtnActive(color) {
   return {
     flex: 1,
@@ -654,6 +705,19 @@ const styles = {
     lineHeight: 1.5,
     color: "rgba(244,246,251,0.6)",
     marginBottom: 18,
+  },
+  featuredText: {
+    fontSize: 16,
+    lineHeight: 1.55,
+    fontWeight: 600,
+    fontStyle: "italic",
+    color: "#FFFFFF",
+    margin: "0 0 10px",
+  },
+  featuredRef: {
+    fontFamily: "'JetBrains Mono', monospace",
+    fontSize: 11.5,
+    color: "rgba(244,246,251,0.75)",
   },
   proofGrid: {
     display: "grid",
