@@ -11,7 +11,12 @@
   inset: 0;
   border-radius: inherit;
   padding: 1.5px;
-  background: radial-gradient(180px circle at var(--mx) var(--my), rgb(var(--glow-color)), transparent 70%);
+  background: radial-gradient(
+    200px circle at var(--mx) var(--my),
+    rgb(var(--glow-from)) 0%,
+    rgb(var(--glow-to)) 55%,
+    transparent 75%
+  );
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -26,7 +31,12 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: radial-gradient(160px circle at var(--mx) var(--my), rgba(var(--glow-color), 0.12), transparent 70%);
+  background: radial-gradient(
+    170px circle at var(--mx) var(--my),
+    rgba(var(--glow-from), 0.14) 0%,
+    rgba(var(--glow-to), 0.12) 55%,
+    transparent 75%
+  );
   opacity: 0;
   transition: opacity 0.25s ease;
   pointer-events: none;

@@ -168,6 +168,8 @@ export default function DonationImpactCalculator() {
 
   const accent = mode === "well" ? BLUE : PINK;
   const accentRgb = hexToRgb(accent);
+  const blueRgb = hexToRgb(BLUE);
+  const pinkRgb = hexToRgb(PINK);
   const featured = FEATURED[mode];
   const cartUrl = `${DONATE_BASE_URL}?fund=${FUND_SLUG[mode]}&amount=${amount}`;
 
@@ -291,15 +293,15 @@ export default function DonationImpactCalculator() {
               : "rewards of worship, multiplied — credited to you for every prayer prayed inside it"}
           </div>
 
-          {/* The single most specific promise for THIS deed */}
-          <GlowCard glowColor={accentRgb} style={quoteCardStyle(accent)}>
+          {/* The single most specific promise for THIS deed — blue → pink glow on hover */}
+          <GlowCard glowFrom={blueRgb} glowTo={pinkRgb} style={quoteCardStyle(accent)}>
             <span style={featuredBadge(accent)}>{featured.badge}</span>
             <p style={styles.featuredText}>“{featured.text}”</p>
             <span style={styles.featuredRef}>— {featured.ref}</span>
           </GlowCard>
 
-          {/* The multiplier verse — same card template, same accent, so both read as one family */}
-          <GlowCard glowColor={accentRgb} style={quoteCardStyle(accent, 0)}>
+          {/* The multiplier verse — same card template, reversed pink → blue glow on hover */}
+          <GlowCard glowFrom={pinkRgb} glowTo={blueRgb} style={quoteCardStyle(accent, 0)}>
             <span style={featuredBadge(accent)}>THE MULTIPLIER</span>
             <p style={styles.featuredText}>
               "The example of those who spend their wealth in the way of Allah is like a seed
