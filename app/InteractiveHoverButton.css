@@ -14,25 +14,20 @@
   box-sizing: border-box;
 }
 
-.ihb-row {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.ihb-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
+.ihb-fill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   background: var(--ihb-accent, #000);
-  flex-shrink: 0;
-  transition: transform 0.35s ease;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.4s ease;
+  pointer-events: none;
 }
 
 .ihb-label {
+  position: relative;
+  z-index: 1;
   display: inline-block;
   color: var(--ihb-accent, #000);
   transition: transform 0.35s ease, opacity 0.35s ease;
@@ -53,9 +48,9 @@
   pointer-events: none;
 }
 
-.ihb:hover .ihb-dot,
-.ihb:focus-visible .ihb-dot {
-  transform: scale(60);
+.ihb:hover .ihb-fill,
+.ihb:focus-visible .ihb-fill {
+  transform: scaleX(1);
 }
 
 .ihb:hover .ihb-label,
