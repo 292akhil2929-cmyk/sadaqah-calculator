@@ -356,7 +356,7 @@
   }
   .card--photo{padding:0 0 26px;}
   .card--photo .card-photo{
-    width:100%; height:170px; background-size:cover; background-position:center; margin-bottom:20px; position:relative;
+    width:100%; height:280px; background-size:cover; background-position:center; margin-bottom:20px; position:relative;
   }
   .card--photo .card-photo::after{
     content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(10,61,107,0.15), transparent 60%);
@@ -483,11 +483,11 @@
   .progress-cols li{font-size:14px; color:var(--ink-dim); padding:6px 0 6px 22px; position:relative;}
   .progress-cols li::before{content:'✓'; position:absolute; left:0; color:var(--blue); font-weight:800;}
   .progress-cols .prog li::before{content:'●'; color:var(--blue); font-size:9px; top:11px;}
-  .report-side-photo{width:100%; border-radius:16px; object-fit:cover; max-height:220px;}
+  .report-side-photo{width:100%; border-radius:16px; object-fit:cover; max-height:340px;}
 
   /* report photos + click-to-expand */
   .report-photo-strip{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:22px 0;}
-  .report-photo-strip img{width:100%; height:130px; object-fit:cover; border-radius:14px; box-shadow:0 8px 20px -10px rgba(10,61,107,0.35);}
+  .report-photo-strip img{width:100%; height:240px; object-fit:cover; border-radius:14px; box-shadow:0 8px 20px -10px rgba(10,61,107,0.35);}
   .w2-detail .report-card{margin-top:24px;}
   @media(max-width:700px){ .report-photo-strip{grid-template-columns:1fr 1fr;} .report-photo-strip img:nth-child(3){display:none;} .progress-cols{grid-template-columns:1fr;} }
 
@@ -504,13 +504,13 @@
   .cta-inner .btn-primary::before{background:conic-gradient(from 0deg, transparent 0%, var(--pink) 6%, transparent 14%);}
 
   /* Field Gallery, ported from reactbits.dev/components/dome-gallery (simplified 3D ring) */
-  .dome-wrap{position:relative; height:420px; margin-top:20px; overflow:hidden; background:linear-gradient(180deg,var(--bg-soft),#fff);}
-  .dome-stage{width:100%; height:100%; display:flex; align-items:center; justify-content:center; perspective:1400px; cursor:grab;}
+  .dome-wrap{position:relative; height:520px; margin-top:20px; overflow:hidden; background:linear-gradient(180deg,var(--bg-soft),#fff);}
+  .dome-stage{width:100%; height:100%; display:flex; align-items:center; justify-content:center; perspective:1600px; cursor:grab;}
   .dome-stage.dragging{cursor:grabbing;}
-  .dome-ring{position:relative; width:260px; height:320px; transform-style:preserve-3d; will-change:transform;}
+  .dome-ring{position:relative; width:320px; height:400px; transform-style:preserve-3d; will-change:transform;}
   .dome-tile{
-    position:absolute; inset:0; margin:auto; width:240px; height:300px; border-radius:20px; overflow:hidden;
-    box-shadow:0 20px 40px -12px rgba(10,61,107,0.4); border:4px solid #fff;
+    position:absolute; inset:0; margin:auto; width:300px; height:380px; border-radius:22px; overflow:hidden;
+    box-shadow:0 24px 48px -12px rgba(10,61,107,0.45); border:5px solid #fff;
     backface-visibility:hidden;
   }
   .dome-tile img{width:100%; height:100%; object-fit:cover; filter:grayscale(0.85) brightness(0.92); transition:filter .4s ease;}
@@ -518,7 +518,7 @@
   .dome-edge{position:absolute; top:0; bottom:0; width:140px; z-index:3; pointer-events:none;}
   .dome-edge--l{left:0; background:linear-gradient(to right, var(--bg-soft), transparent);}
   .dome-edge--r{right:0; background:linear-gradient(to left, #fff, transparent);}
-  @media(max-width:700px){ .dome-wrap{height:320px;} .dome-ring{width:190px; height:240px;} .dome-tile{width:170px; height:220px;} }
+  @media(max-width:700px){ .dome-wrap{height:380px;} .dome-ring{width:220px; height:280px;} .dome-tile{width:200px; height:260px;} }
 
   /* Smooth Cursor, ported from motion-primitives smooth-cursor */
   @media(hover:hover) and (pointer:fine){
@@ -709,7 +709,7 @@
       <div class="border-glow-card reveal magic-card" data-glow data-glow-color="270 90% 70%" data-colors="#c084fc,#f472b6,#1c74c6">
         <span class="edge-light"></span>
         <div class="border-glow-inner card card--photo">
-          <div class="card-photo" style="background-image:url('assets/orphans-ummah.jpg'); background-size:520% auto; background-position:83% 42%;"></div>
+          <div class="card-photo" style="background-image:url('assets/media/kids-eating-tent.png'); background-size:cover; background-position:center 30%;"></div>
           <h3>Orphan & Widow Care</h3>
           <p>Supporting 18,768 orphans and 264 widows across 8 countries — Togo, Lebanon, Palestine, Jordan, Syria, Yemen, Afghanistan and Bangladesh — plus education for over 5,000 children.</p>
         </div>
@@ -717,7 +717,7 @@
       <div class="border-glow-card reveal magic-card" data-glow data-glow-color="200 90% 60%" data-colors="#3fa9f5,#1c74c6,#38bdf8">
         <span class="edge-light"></span>
         <div class="border-glow-inner card card--photo">
-          <div class="card-photo" style="background-image:url('assets/water-aid.jpg'); background-size:480% auto; background-position:63% 32%;"></div>
+          <div class="card-photo" style="background-image:url('assets/media/girl-water-sudan.png'); background-size:cover; background-position:center 25%;"></div>
           <h3>Water Aid & Infrastructure</h3>
           <p>Daily water tank deliveries in Sudan and Gaza, plus deep solar-powered wells and hand pumps across Togo, Bangladesh and Uganda — built to break the cycle of waterborne illness for good.</p>
         </div>
@@ -725,7 +725,7 @@
       <div class="border-glow-card reveal magic-card" data-glow data-glow-color="335 90% 65%" data-colors="#f60362,#ff5c96,#c084fc">
         <span class="edge-light"></span>
         <div class="border-glow-inner card card--photo">
-          <div class="card-photo" style="background-image:url('assets/gaza-food-water.jpg'); background-size:500% auto; background-position:86% 38%;"></div>
+          <div class="card-photo" style="background-image:url('assets/media/hotmeals-north-gaza.png'); background-size:cover; background-position:center 40%;"></div>
           <h3>Emergency Crisis Relief</h3>
           <p>Rapid deployment of hot meals, baby milk, diapers and medical kits directly into Gaza and Sudan — thousands of families reached every single week.</p>
         </div>
@@ -744,12 +744,15 @@
   <div class="dome-wrap reveal">
     <div class="dome-stage" id="domeStage">
       <div class="dome-ring" id="domeRing">
-        <div class="dome-tile"><img src="assets/gaza-food-water.jpg" alt="Gaza food and water relief"></div>
-        <div class="dome-tile"><img src="assets/water-aid.jpg" alt="Water aid distribution"></div>
-        <div class="dome-tile"><img src="assets/sudan-crisis.jpg" alt="Sudan crisis relief"></div>
-        <div class="dome-tile"><img src="assets/orphans-ummah.jpg" alt="Orphan sponsorship"></div>
-        <div class="dome-tile"><img src="assets/build-masjid.jpg" alt="Masjid construction project"></div>
-        <div class="dome-tile"><img src="assets/zakat.jpg" alt="Zakat relief distribution"></div>
+        <div class="dome-tile"><img src="assets/media/hotmeals-north-gaza.png" alt="Hot meal distribution in northern Gaza"></div>
+        <div class="dome-tile"><img src="assets/media/girl-water-sudan.png" alt="Girl carrying water in Sudan"></div>
+        <div class="dome-tile"><img src="assets/media/kids-eating-tent.png" alt="Children receiving a hot meal in a displacement tent"></div>
+        <div class="dome-tile"><img src="assets/media/sudan-mother-children.png" alt="Mother and children in Sudan"></div>
+        <div class="dome-tile"><img src="assets/media/special-cases-gaza.png" alt="Children in Gaza with a water basin"></div>
+        <div class="dome-tile"><img src="assets/media/family-tent.png" alt="Family receiving aid supplies in a tent"></div>
+        <div class="dome-tile"><img src="assets/media/babymilk-gaza.png" alt="Baby milk and diaper distribution in Gaza"></div>
+        <div class="dome-tile"><img src="assets/media/refugee-kitchen-sudan.png" alt="Refugee kitchen project in Sudan"></div>
+        <div class="dome-tile"><img src="assets/media/sudan-water-boy.png" alt="Boy drinking clean water in Sudan"></div>
       </div>
     </div>
     <div class="dome-edge dome-edge--l"></div>
@@ -800,7 +803,7 @@
     <div class="week-toolbar reveal" id="weekToolbar">
       <button class="week-pill active" data-week="w1">Week of 15–19 June 2026</button>
       <button class="week-pill" data-week="w2">Week 25 · 15–21 June 2026</button>
-      <button class="week-pill" data-week="w3">Week of 29 Jun–3 Jul 2026 <span class="soon">Upcoming</span></button>
+      <button class="week-pill" data-week="w3">Week 26 · 22–28 June 2026</button>
     </div>
 
     <!-- WEEK 1 -->
@@ -852,9 +855,9 @@
           </div>
 
           <div class="report-photo-strip">
-            <img src="assets/report-queue.png" alt="Hot meal distribution queue in Gaza" loading="lazy">
-            <img src="assets/report-boy-food.png" alt="Boy receiving a hot meal in Gaza" loading="lazy">
-            <img src="assets/report-boy-water.png" alt="Boy carrying water in a displacement camp" loading="lazy">
+            <img src="assets/media/hotmeals-north-gaza.png" alt="Hot meal distribution in northern Gaza" loading="lazy">
+            <img src="assets/media/special-cases-gaza.png" alt="Children in Gaza with a water basin" loading="lazy">
+            <img src="assets/media/sudan-water-boy.png" alt="Boy drinking clean water in Sudan" loading="lazy">
           </div>
 
           <div class="subhead">🚨 Emergency Response — Palestine & Sudan</div>
@@ -925,9 +928,9 @@
               </div>
             </div>
             <div class="report-photo-strip">
-              <img src="assets/report-hotmeals-trays.png" alt="Hot meal trays prepared for distribution" loading="lazy">
-              <img src="assets/report-blue-bags.png" alt="Aid bags being distributed to families" loading="lazy">
-              <img src="assets/report-kids-basin.png" alt="Children with a water basin" loading="lazy">
+              <img src="assets/media/refugee-kitchen-sudan.png" alt="Refugee kitchen project in Sudan" loading="lazy">
+              <img src="assets/media/family-tent.png" alt="Family receiving aid supplies in a tent" loading="lazy">
+              <img src="assets/media/babymilk-gaza.png" alt="Baby milk and diaper distribution in Gaza" loading="lazy">
             </div>
           </div>
         </div>
@@ -955,7 +958,7 @@
                   </ul>
                 </div>
               </div>
-              <img class="report-side-photo" src="assets/report-orphanage.png" alt="North Lebanon Orphanage and Medical Center render" loading="lazy">
+              <img class="report-side-photo" src="assets/w26-tripoli-building.png" alt="North Lebanon Orphanage and Medical Center under construction" loading="lazy">
             </div>
           </div>
         </div>
@@ -977,13 +980,140 @@
       </div>
     </div>
 
-    <!-- WEEK 3 -->
+    <!-- WEEK 3 (real "Week 26" programs report) -->
     <div class="week-panel" id="panel-w3">
-      <div class="placeholder-panel">
-        <div class="ic">🕐</div>
-        <h4>This week's report hasn't landed yet</h4>
-        <p>Once Operations submits the 29 Jun–3 Jul update, it will appear here automatically.</p>
+
+      <div class="border-glow-card magic-card reveal" data-glow data-glow-color="335 90% 65%" data-colors="#f60362,#ff5c96,#1c74c6">
+        <span class="edge-light"></span>
+        <div class="border-glow-inner report-card">
+          <div class="week-head">
+            <div>
+              <h3>MATW Programs Weekly Report</h3>
+              <div class="meta">Week 26 · Distribution summary 22–28 June 2026</div>
+            </div>
+            <div class="role-chip">Emergency + BAU + Health + Construction</div>
+          </div>
+
+          <div class="report-photo-strip">
+            <img src="assets/media/kids-eating-tent.png" alt="Children receiving a hot meal in a displacement tent" loading="lazy">
+            <img src="assets/media/sudan-mother-children.png" alt="Mother and children in Sudan" loading="lazy">
+            <img src="assets/media/girl-water-sudan.png" alt="Girl carrying water in Sudan" loading="lazy">
+          </div>
+
+          <div class="subhead">🚨 Emergency Response — Palestine & Sudan</div>
+          <div class="region-grid">
+            <div class="region">
+              <h4>🇵🇸 Palestine (Gaza)</h4>
+              <div class="mini-stats">
+                <div class="mini-stat shine-tile"><div class="n">50,000L</div><div class="l">Drinking water distributed</div></div>
+                <div class="mini-stat shine-tile"><div class="n">2,940</div><div class="l">Vegetable baskets distributed</div></div>
+                <div class="mini-stat shine-tile"><div class="n">2,020</div><div class="l">Assistive devices (wheelchairs, canes, crutches)</div></div>
+                <div class="mini-stat shine-tile"><div class="n">25,381</div><div class="l">Family hot meals served</div></div>
+              </div>
+            </div>
+            <div class="region">
+              <h4>🇸🇩 Sudan</h4>
+              <div class="mini-stats">
+                <div class="mini-stat shine-tile"><div class="n">10,000</div><div class="l">Family hot meals (rice & meat)</div></div>
+                <div class="mini-stat shine-tile"><div class="n">4</div><div class="l">25,000L water tanks delivered</div></div>
+                <div class="mini-stat shine-tile"><div class="n">7 days</div><div class="l">Continuous daily distribution</div></div>
+                <div class="mini-stat shine-tile"><div class="n">100</div><div class="l">Cataract cases + Zakat + rice bags</div></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
+
+      <div class="border-glow-card magic-card reveal" data-glow data-glow-color="45 95% 60%" data-colors="#f5b942,#f60362,#1c74c6">
+        <span class="edge-light"></span>
+        <div class="border-glow-inner report-card">
+          <div class="subhead">👶 Orphans & Widows — Country Breakdown</div>
+          <table class="orphan-table">
+            <tr><th>Country</th><th>Orphans</th><th>Widows</th><th>Children Educated</th></tr>
+            <tr><td>Togo</td><td>1,388</td><td>44</td><td>4,400</td></tr>
+            <tr><td>Lebanon</td><td>380</td><td>220</td><td>38</td></tr>
+            <tr><td>Palestine</td><td>14,000</td><td>—</td><td>—</td></tr>
+            <tr><td>Jordan</td><td>500</td><td>—</td><td>—</td></tr>
+            <tr><td>Syria</td><td>1,000</td><td>—</td><td>—</td></tr>
+            <tr><td>Yemen</td><td>1,000</td><td>—</td><td>—</td></tr>
+            <tr><td>Afghanistan</td><td>—</td><td>—</td><td>200</td></tr>
+            <tr><td>Bangladesh</td><td>500</td><td>—</td><td>400</td></tr>
+            <tr class="total"><td>Total</td><td>18,768</td><td>264</td><td>5,038</td></tr>
+          </table>
+          <div class="report-photo-strip">
+            <img src="assets/w26-wheelchair-boy.png" alt="Boy receiving a wheelchair in Gaza" loading="lazy">
+            <img src="assets/media/hotmeals-north-gaza.png" alt="Hot meal distribution in northern Gaza" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="border-glow-card magic-card reveal" data-glow data-glow-color="270 90% 70%" data-colors="#c084fc,#1c74c6,#f472b6">
+        <span class="edge-light"></span>
+        <div class="border-glow-inner report-card">
+          <div class="subhead">👧 BAU — Orphan Programs (Togo on Summer Holidays)</div>
+          <div class="deleg-grid">
+            <div class="deleg">
+              <span class="rt">Daily</span>
+              <h5>Bangladesh</h5>
+              <p>500 orphan hot meals per day (3 meals), plus education support for 400 children.</p>
+            </div>
+            <div class="deleg">
+              <span class="rt">Daily</span>
+              <h5>Lebanon</h5>
+              <p>Orphan care, education and recreational activities continuing for 38 children.</p>
+            </div>
+            <div class="deleg">
+              <span class="rt">This week</span>
+              <h5>Togo</h5>
+              <p>1,388 orphans on scheduled Summer Holidays — sports and recreational activities paused for the school break.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-glow-card magic-card reveal" data-glow data-glow-color="200 90% 60%" data-colors="#3fa9f5,#38bdf8,#1c74c6">
+        <span class="edge-light"></span>
+        <div class="border-glow-inner report-card">
+          <div class="subhead">🏗️ Lebanon Orphanage Construction (Tripoli)</div>
+          <div class="progress-cols">
+            <div>
+              <div>
+                <div style="font-weight:800; color:var(--blue-dk); font-size:14px;">Done last week</div>
+                <ul>
+                  <li>Electrical works phase 2 (50%)</li>
+                  <li>Tiling works (50%)</li>
+                </ul>
+              </div>
+              <div style="margin-top:18px;">
+                <div style="font-weight:800; color:var(--blue-dk); font-size:14px;">In progress</div>
+                <ul class="prog">
+                  <li>Electricity works phase 2</li>
+                  <li>Extra exterior doors, windows & steel fence</li>
+                  <li>Tiling works</li>
+                  <li>Painting works phase 2</li>
+                </ul>
+              </div>
+            </div>
+            <img class="report-side-photo" src="assets/w26-tripoli-building.png" alt="North Lebanon Orphanage and Medical Center under construction" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="border-glow-card magic-card reveal" data-glow data-glow-color="150 80% 50%" data-colors="#22c58b,#1c74c6,#38bdf8">
+        <span class="edge-light"></span>
+        <div class="border-glow-inner report-card">
+          <div class="subhead">🏥 Health — Project Noor Cataract Surgeries</div>
+          <div class="health-grid">
+            <div class="health-tile shine-tile"><div class="n">316</div><div class="l">Bangladesh — completed</div></div>
+            <div class="health-tile shine-tile"><div class="n">1,000</div><div class="l">Pakistan — in progress</div></div>
+            <div class="health-tile shine-tile"><div class="n">1,200</div><div class="l">Bangladesh — in progress</div></div>
+            <div class="health-tile shine-tile"><div class="n">400</div><div class="l">Togo — in progress</div></div>
+            <div class="health-tile shine-tile"><div class="n">500</div><div class="l">Chad — in progress</div></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1309,7 +1439,7 @@
     const ring = document.getElementById('domeRing');
     if(!stage || !ring) return;
     const tiles = ring.querySelectorAll('.dome-tile');
-    const radius = 420;
+    const radius = 520;
     const seg = 360 / tiles.length;
     tiles.forEach((tile,i)=>{
       tile.style.transform = `rotateY(${i*seg}deg) translateZ(${radius}px)`;
