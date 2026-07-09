@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 
 /**
  * Sadaqah Jariyah Impact Calculator — MATW brand theme (magenta #f60362 / blue #00a3da)
@@ -29,9 +29,15 @@ import React, { useState, useMemo, useEffect } from "react";
 
 const CURRENCY = "$";
 
-// MATW brand palette — sampled from the live site's blue nav + magenta band
+// MATW brand palette — sampled directly from the live site's blue nav + magenta band
 const PINK = "#e6007e";
 const BLUE = "#3aa0da";
+const INK = "#0d1b2a";
+
+// Where "Add to Cart" sends the donor. MATW's cart takes amount + a fund name as
+// query params — swap this for the real product/cart endpoint when integrating.
+const DONATE_BASE_URL = "https://matwproject.org/sadaqah-jariyah";
+const FUND_SLUG = { well: "water-wells", masjid: "build-a-masjid" };
 
 const WELL_ANCHORS = [
   { cost: 500, peoplePerDay: 100, lifespanYears: 12 },
@@ -172,7 +178,7 @@ function computeMasjidImpact(amount) {
 export default function DonationImpactCalculator() {
   const [mode, setMode] = useState("well");
   const [amount, setAmount] = useState(500);
-  const [pulse, setPulse] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   const min = 25;
   const max = mode === "well" ? 12000 : 45000;
@@ -190,21 +196,22 @@ export default function DonationImpactCalculator() {
   // The reward we can actually put a number on — multiplied ≥700× per Qur'an 2:261.
   const multipliedReward = lifetimeActs * REWARD_MULTIPLIER;
 
-  useEffect(() => {
-    setPulse(true);
-    const t = setTimeout(() => setPulse(false), 220);
-    return () => clearTimeout(t);
-  }, [amount, mode]);
-
   function switchMode(next) {
     setMode(next);
     setAmount(next === "well" ? 500 : 15000);
+    setHasInteracted(true);
+  }
+
+  function changeAmount(next) {
+    setAmount(next);
+    setHasInteracted(true);
   }
 
   const accent = mode === "well" ? BLUE : PINK;
   const verse = VERSE[mode];
   const rewardTexts = REWARD_TEXTS[mode];
   const featured = FEATURED[mode];
+  const cartUrl = `${DONATE_BASE_URL}?fund=${FUND_SLUG[mode]}&amount=${amount}`;
 
   return (
     <div style={styles.page}>
@@ -219,62 +226,29 @@ export default function DonationImpactCalculator() {
           width: 100%;
           height: 8px;
           border-radius: 999px;
-          background: linear-gradient(90deg, var(--accent, ${PINK}) 0%, var(--accent, ${PINK}) var(--fill, 20%), rgba(255,255,255,0.14) var(--fill, 20%), rgba(255,255,255,0.14) 100%);
+          background: linear-gradient(90deg, var(--accent, ${PINK}) 0%, var(--accent, ${PINK}) var(--fill, 20%), #E4E9F0 var(--fill, 20%), #E4E9F0 100%);
           outline: none;
         }
         .sjc-slider::-webkit-slider-thumb {
           -webkit-appearance: none;
           appearance: none;
-          width: 26px;
-          height: 26px;
+          width: 24px;
+          height: 24px;
           border-radius: 50%;
-          background: #FFFFFF;
-          border: 4px solid var(--accent, ${PINK});
+          background: var(--accent, ${PINK});
+          border: 3px solid #FFFFFF;
           cursor: pointer;
-          box-shadow: 0 2px 12px var(--accent, ${PINK});
         }
         .sjc-slider::-moz-range-thumb {
-          width: 26px;
-          height: 26px;
+          width: 24px;
+          height: 24px;
           border-radius: 50%;
-          background: #FFFFFF;
-          border: 4px solid var(--accent, ${PINK});
+          background: var(--accent, ${PINK});
+          border: 3px solid #FFFFFF;
           cursor: pointer;
         }
-        .sjc-mode-btn { transition: all 0.2s ease; }
-        .sjc-pulse { transition: transform 0.22s cubic-bezier(.34,1.56,.64,1); }
-        .sjc-pulse.on { transform: scale(1.06); }
-        .sjc-reward-shimmer {
-          background: linear-gradient(100deg, ${PINK} 0%, #ff5fa2 30%, ${BLUE} 70%, ${PINK} 100%);
-          background-size: 220% auto;
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-          animation: sjc-shimmer 5s linear infinite;
-        }
-        @keyframes sjc-shimmer {
-          to { background-position: 220% center; }
-        }
-        .sjc-glow {
-          position: absolute;
-          width: 340px;
-          height: 340px;
-          border-radius: 50%;
-          filter: blur(80px);
-          opacity: 0.3;
-          pointer-events: none;
-          transition: background 0.4s ease;
-        }
+        .sjc-cta-btn:hover { opacity: 0.92; }
       `}</style>
-
-      <div
-        className="sjc-glow"
-        style={{ top: -80, right: -60, background: accent }}
-      />
-      <div
-        className="sjc-glow"
-        style={{ bottom: -120, left: -80, background: mode === "well" ? PINK : BLUE, opacity: 0.18 }}
-      />
 
       <div className="sjc-root" style={styles.wrap}>
         <div style={styles.eyebrow}>SADAQAH JARIYAH · IMPACT CALCULATOR</div>
@@ -306,7 +280,7 @@ export default function DonationImpactCalculator() {
         <div style={styles.sliderBlock}>
           <div style={styles.sliderLabelRow}>
             <span style={styles.sliderLabel}>Your donation</span>
-            <span className={`sjc-mono sjc-pulse ${pulse ? "on" : ""}`} style={styles.amountDisplay}>
+            <span className="sjc-mono" style={styles.amountDisplay}>
               {CURRENCY}
               {amount.toLocaleString()}
             </span>
@@ -318,7 +292,7 @@ export default function DonationImpactCalculator() {
             max={max}
             step={mode === "well" ? 25 : 250}
             value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
+            onChange={(e) => changeAmount(Number(e.target.value))}
             style={{ "--fill": `${((amount - min) / (max - min)) * 100}%`, "--accent": accent }}
           />
           <div style={styles.sliderMinMax}>
@@ -330,7 +304,7 @@ export default function DonationImpactCalculator() {
         {/* Worldly impact — three across */}
         <div style={styles.resultsGrid}>
           <div style={styles.resultCard}>
-            <div className={`sjc-mono sjc-pulse ${pulse ? "on" : ""}`} style={resultNumber(accent)}>
+            <div className="sjc-mono" style={resultNumber(accent)}>
               {fmt(impact.rate)}
             </div>
             <div style={styles.resultLabel}>
@@ -338,13 +312,13 @@ export default function DonationImpactCalculator() {
             </div>
           </div>
           <div style={styles.resultCard}>
-            <div className={`sjc-mono sjc-pulse ${pulse ? "on" : ""}`} style={resultNumber(accent)}>
+            <div className="sjc-mono" style={resultNumber(accent)}>
               {impact.lifespanYears.toFixed(0)}
             </div>
             <div style={styles.resultLabel}>years it keeps serving the community</div>
           </div>
           <div style={styles.resultCard}>
-            <div className={`sjc-mono sjc-pulse ${pulse ? "on" : ""}`} style={resultNumber(accent)}>
+            <div className="sjc-mono" style={resultNumber(accent)}>
               {mode === "well" ? fmt(litres) : fmt(actsOfWorship)}
             </div>
             <div style={styles.resultLabel}>
@@ -352,6 +326,19 @@ export default function DonationImpactCalculator() {
             </div>
           </div>
         </div>
+
+        {/* CTA — appears only after the donor has actually engaged with the calculator */}
+        {hasInteracted && (
+          <a
+            href={cartUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="sjc-cta-btn"
+            style={ctaButton(accent)}
+          >
+            Add to Cart — Donate {CURRENCY}{amount.toLocaleString()} Now
+          </a>
+        )}
 
         <div style={styles.disclaimer}>
           Figures are reasonable estimates from MATW's published pricing and completed
@@ -365,7 +352,7 @@ export default function DonationImpactCalculator() {
             <span style={styles.rewardMultBadge}>≥ {REWARD_MULTIPLIER}× MULTIPLIER</span>
           </div>
 
-          <div className={`sjc-mono sjc-reward-shimmer sjc-pulse ${pulse ? "on" : ""}`} style={styles.rewardNumber}>
+          <div className="sjc-mono" style={styles.rewardNumber}>
             {fmt(multipliedReward)}
           </div>
           <div style={styles.rewardNumberLabel}>
@@ -434,16 +421,18 @@ export default function DonationImpactCalculator() {
   );
 }
 
-// ── style helpers that depend on the active accent ──
+// ── style helpers that depend on the active accent — flat, plain, no glow/gradient ──
 function featuredCard(color) {
   return {
     position: "relative",
-    borderRadius: 14,
+    borderRadius: 12,
     padding: "16px 18px",
     marginBottom: 18,
-    background: `linear-gradient(135deg, ${hexA(color, 0.16)} 0%, ${hexA(color, 0.05)} 100%)`,
-    border: `1px solid ${hexA(color, 0.45)}`,
-    boxShadow: `0 0 26px ${hexA(color, 0.16)}`,
+    background: "#FFFFFF",
+    borderLeft: `4px solid ${color}`,
+    border: "1px solid #E4E9F0",
+    borderLeftWidth: 4,
+    borderLeftColor: color,
   };
 }
 function featuredBadge(color) {
@@ -455,7 +444,7 @@ function featuredBadge(color) {
     fontWeight: 700,
     color: "#fff",
     background: color,
-    borderRadius: 999,
+    borderRadius: 4,
     padding: "4px 11px",
     marginBottom: 12,
   };
@@ -464,14 +453,13 @@ function modeBtnActive(color) {
   return {
     flex: 1,
     padding: "13px 16px",
-    borderRadius: 12,
+    borderRadius: 10,
     border: `1px solid ${color}`,
-    background: hexA(color, 0.16),
+    background: color,
     color: "#FFFFFF",
     fontSize: 14,
     fontWeight: 700,
     cursor: "pointer",
-    boxShadow: `0 0 22px ${hexA(color, 0.28)}`,
   };
 }
 function resultNumber(color) {
@@ -490,38 +478,37 @@ function proofBadge(color) {
     fontSize: 9.5,
     letterSpacing: "0.1em",
     fontWeight: 700,
-    color,
-    background: hexA(color, 0.12),
-    border: `1px solid ${hexA(color, 0.35)}`,
-    borderRadius: 999,
+    color: "#fff",
+    background: color,
+    borderRadius: 4,
     padding: "3px 9px",
     marginBottom: 10,
   };
 }
 function caseStats(color) {
-  return { fontSize: 12.5, color };
+  return { fontSize: 12.5, color, fontWeight: 700 };
 }
-
-// hex (#rrggbb) → rgba string
-function hexA(hex, a) {
-  const h = hex.replace("#", "");
-  const r = parseInt(h.slice(0, 2), 16);
-  const g = parseInt(h.slice(2, 4), 16);
-  const b = parseInt(h.slice(4, 6), 16);
-  return `rgba(${r},${g},${b},${a})`;
+function ctaButton(color) {
+  return {
+    display: "block",
+    textAlign: "center",
+    textDecoration: "none",
+    background: color,
+    color: "#FFFFFF",
+    fontSize: 15,
+    fontWeight: 700,
+    borderRadius: 10,
+    padding: "16px 20px",
+    marginBottom: 20,
+  };
 }
 
 const styles = {
   page: {
-    position: "relative",
-    minHeight: "100%",
-    overflow: "hidden",
-    background: "radial-gradient(ellipse 120% 80% at 50% -10%, #0B2A55 0%, #08183A 45%, #050C1F 100%)",
-    color: "#F4F6FB",
+    background: "#FFFFFF",
+    color: INK,
   },
   wrap: {
-    position: "relative",
-    zIndex: 1,
     maxWidth: 720,
     margin: "0 auto",
     padding: "40px 20px 48px",
@@ -532,18 +519,19 @@ const styles = {
     letterSpacing: "0.14em",
     color: PINK,
     marginBottom: 10,
+    fontWeight: 700,
   },
   h1: {
     fontSize: "clamp(24px, 5vw, 40px)",
     fontWeight: 800,
     margin: "0 0 12px",
     lineHeight: 1.15,
-    color: "#FFFFFF",
+    color: INK,
   },
   sub: {
     fontSize: 14.5,
     lineHeight: 1.55,
-    color: "rgba(244,246,251,0.62)",
+    color: "#5A6B7A",
     margin: "0 0 24px",
     maxWidth: 560,
   },
@@ -551,7 +539,7 @@ const styles = {
     fontSize: "clamp(17px, 3vw, 21px)",
     fontWeight: 700,
     margin: "0 0 12px",
-    color: "#FFFFFF",
+    color: INK,
   },
   modeRow: {
     display: "flex",
@@ -561,18 +549,18 @@ const styles = {
   modeBtn: {
     flex: 1,
     padding: "13px 16px",
-    borderRadius: 12,
-    border: "1px solid rgba(244,246,251,0.15)",
-    background: "rgba(244,246,251,0.04)",
-    color: "rgba(244,246,251,0.7)",
+    borderRadius: 10,
+    border: "1px solid #D8DEE6",
+    background: "#F5F7FA",
+    color: "#5A6B7A",
     fontSize: 14,
     fontWeight: 700,
     cursor: "pointer",
   },
   sliderBlock: {
-    background: "rgba(244,246,251,0.05)",
-    border: "1px solid rgba(244,246,251,0.12)",
-    borderRadius: 18,
+    background: "#F5F7FA",
+    border: "1px solid #E4E9F0",
+    borderRadius: 14,
     padding: "22px 20px",
     marginBottom: 16,
   },
@@ -584,14 +572,14 @@ const styles = {
   },
   sliderLabel: {
     fontSize: 12,
-    color: "rgba(244,246,251,0.6)",
+    color: "#5A6B7A",
     textTransform: "uppercase",
     letterSpacing: "0.06em",
     fontWeight: 600,
   },
   amountDisplay: {
     fontSize: 28,
-    color: "#FFFFFF",
+    color: INK,
     fontWeight: 700,
     display: "inline-block",
   },
@@ -599,7 +587,7 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     fontSize: 10.5,
-    color: "rgba(244,246,251,0.4)",
+    color: "#8A97A5",
     marginTop: 8,
   },
   resultsGrid: {
@@ -611,34 +599,31 @@ const styles = {
   resultCard: {
     flex: 1,
     minWidth: 0,
-    background: "rgba(244,246,251,0.05)",
-    border: "1px solid rgba(244,246,251,0.12)",
-    borderRadius: 14,
+    background: "#F5F7FA",
+    border: "1px solid #E4E9F0",
+    borderRadius: 12,
     padding: "16px 8px",
     textAlign: "center",
   },
   resultLabel: {
     fontSize: 10.5,
     lineHeight: 1.35,
-    color: "rgba(244,246,251,0.6)",
+    color: "#5A6B7A",
   },
   disclaimer: {
     fontSize: 11,
     lineHeight: 1.5,
-    color: "rgba(244,246,251,0.4)",
+    color: "#8A97A5",
     marginBottom: 22,
   },
 
-  // ── Eternal reward panel ──
+  // ── Eternal reward panel — flat two-tone block, no gradients/glow ──
   rewardPanel: {
-    position: "relative",
-    borderRadius: 20,
+    borderRadius: 14,
     padding: "22px 20px 20px",
     marginBottom: 16,
-    background:
-      "linear-gradient(160deg, rgba(246,3,98,0.10) 0%, rgba(0,163,218,0.08) 100%)",
-    border: "1px solid rgba(246,3,98,0.35)",
-    boxShadow: "0 0 40px rgba(246,3,98,0.12)",
+    background: "#F5F7FA",
+    border: "1px solid #E4E9F0",
   },
   rewardTopRow: {
     display: "flex",
@@ -652,7 +637,7 @@ const styles = {
     fontFamily: "'JetBrains Mono', monospace",
     fontSize: 11,
     letterSpacing: "0.14em",
-    color: "rgba(244,246,251,0.85)",
+    color: INK,
     fontWeight: 700,
   },
   rewardMultBadge: {
@@ -661,8 +646,8 @@ const styles = {
     fontWeight: 700,
     letterSpacing: "0.06em",
     color: "#fff",
-    background: `linear-gradient(90deg, ${PINK}, ${BLUE})`,
-    borderRadius: 999,
+    background: PINK,
+    borderRadius: 4,
     padding: "4px 11px",
   },
   rewardNumber: {
@@ -672,17 +657,18 @@ const styles = {
     letterSpacing: "-0.02em",
     display: "inline-block",
     marginTop: 4,
+    color: PINK,
   },
   rewardNumberLabel: {
     fontSize: 12.5,
     lineHeight: 1.5,
-    color: "rgba(244,246,251,0.72)",
+    color: "#5A6B7A",
     marginTop: 10,
     marginBottom: 18,
     maxWidth: 520,
   },
   rewardVerse: {
-    borderLeft: `3px solid ${PINK}`,
+    borderLeft: `3px solid ${BLUE}`,
     paddingLeft: 14,
     marginBottom: 12,
   },
@@ -690,7 +676,7 @@ const styles = {
     fontSize: 15,
     lineHeight: 1.6,
     fontStyle: "italic",
-    color: "rgba(244,246,251,0.9)",
+    color: INK,
     margin: 0,
   },
   rewardVerseRef: {
@@ -698,12 +684,12 @@ const styles = {
     marginTop: 6,
     fontFamily: "'JetBrains Mono', monospace",
     fontSize: 11.5,
-    color: "#ff6fa8",
+    color: BLUE,
   },
   rewardMathNote: {
     fontSize: 12,
     lineHeight: 1.5,
-    color: "rgba(244,246,251,0.6)",
+    color: "#5A6B7A",
     marginBottom: 18,
   },
   featuredText: {
@@ -711,13 +697,13 @@ const styles = {
     lineHeight: 1.55,
     fontWeight: 600,
     fontStyle: "italic",
-    color: "#FFFFFF",
+    color: INK,
     margin: "0 0 10px",
   },
   featuredRef: {
     fontFamily: "'JetBrains Mono', monospace",
     fontSize: 11.5,
-    color: "rgba(244,246,251,0.75)",
+    color: "#5A6B7A",
   },
   proofGrid: {
     display: "grid",
@@ -725,9 +711,9 @@ const styles = {
     gap: 10,
   },
   proofCard: {
-    background: "rgba(5,12,31,0.45)",
-    border: "1px solid rgba(244,246,251,0.1)",
-    borderRadius: 12,
+    background: "#FFFFFF",
+    border: "1px solid #E4E9F0",
+    borderRadius: 10,
     padding: "14px 14px 12px",
     display: "flex",
     flexDirection: "column",
@@ -735,27 +721,27 @@ const styles = {
   proofText: {
     fontSize: 13,
     lineHeight: 1.5,
-    color: "rgba(244,246,251,0.9)",
+    color: INK,
     margin: "0 0 10px",
     flex: 1,
   },
   proofRef: {
     fontFamily: "'JetBrains Mono', monospace",
     fontSize: 10.5,
-    color: "rgba(244,246,251,0.5)",
+    color: "#8A97A5",
   },
 
   quoteCard: {
     borderLeft: `3px solid ${BLUE}`,
-    background: "rgba(0,163,218,0.06)",
-    borderRadius: "0 12px 12px 0",
+    background: "#F5F7FA",
+    borderRadius: "0 10px 10px 0",
     padding: "16px 18px",
     marginBottom: 8,
   },
   quoteText: {
     fontSize: 15,
     lineHeight: 1.6,
-    color: "rgba(244,246,251,0.92)",
+    color: INK,
     fontStyle: "italic",
     margin: 0,
   },
@@ -767,7 +753,7 @@ const styles = {
   },
   sectionDivider: {
     height: 1,
-    background: "rgba(244,246,251,0.12)",
+    background: "#E4E9F0",
     margin: "32px 0 20px",
   },
   caseGrid: {
@@ -776,19 +762,20 @@ const styles = {
     gap: 12,
   },
   caseCard: {
-    border: "1px solid rgba(244,246,251,0.1)",
-    borderRadius: 12,
+    border: "1px solid #E4E9F0",
+    borderRadius: 10,
     padding: "14px 16px",
-    background: "rgba(244,246,251,0.03)",
+    background: "#F5F7FA",
   },
   casePlace: {
     fontWeight: 700,
     fontSize: 14,
     marginBottom: 3,
+    color: INK,
   },
   caseType: {
     fontSize: 12,
-    color: "rgba(244,246,251,0.55)",
+    color: "#5A6B7A",
     marginBottom: 10,
   },
 };
