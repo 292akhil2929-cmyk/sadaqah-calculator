@@ -72,18 +72,6 @@ const FEATURED = {
   },
 };
 
-// Short verse shown right beside the worldly stat, per mode.
-const VERSE = {
-  well: {
-    text: "And We made from water every living thing.",
-    ref: "Qur'an 21:30",
-  },
-  masjid: {
-    text: "The mosques of Allah are only maintained by those who believe in Allah.",
-    ref: "Qur'an 9:18",
-  },
-};
-
 function fmt(n) {
   if (n >= 1_000_000_000) return (n / 1_000_000_000).toFixed(n % 1_000_000_000 === 0 ? 0 : 1) + "B";
   if (n >= 1_000_000) return (n / 1_000_000).toFixed(n % 1_000_000 === 0 ? 0 : 1) + "M";
@@ -165,7 +153,6 @@ export default function DonationImpactCalculator() {
   }
 
   const accent = mode === "well" ? BLUE : PINK;
-  const verse = VERSE[mode];
   const featured = FEATURED[mode];
   const cartUrl = `${DONATE_BASE_URL}?fund=${FUND_SLUG[mode]}&amount=${amount}`;
 
@@ -326,23 +313,18 @@ export default function DonationImpactCalculator() {
           <div style={styles.rewardVerse}>
             <p style={styles.rewardVerseText}>
               "The example of those who spend their wealth in the way of Allah is like a seed
-              which grows <b style={{ color: "#fff" }}>seven ears</b>, in each ear{" "}
-              <b style={{ color: "#fff" }}>a hundred grains</b>. And Allah multiplies for whom
+              which grows <b style={{ color: INK }}>seven ears</b>, in each ear{" "}
+              <b style={{ color: INK }}>a hundred grains</b>. And Allah multiplies for whom
               He wills."
             </p>
             <span style={styles.rewardVerseRef}>— Qur'an 2:261 · Sahih International</span>
           </div>
           <div style={styles.rewardMathNote}>
-            7 ears × 100 grains = <b style={{ color: "#fff" }}>700× the reward</b> as a floor —
-            and Allah multiplies without limit for whom He wills.
+            7 ears × 100 grains = <b style={{ color: INK }}>700× the reward</b> as a floor —
+            applied to every{" "}
+            {mode === "well" ? "person-day of water this well provides" : "prayer prayed inside this masjid"}
+            {" "}over its lifetime. Allah multiplies without limit for whom He wills.
           </div>
-        </div>
-
-        {/* Short worldly verse */}
-        <div style={styles.quoteCard}>
-          <p style={styles.quoteText}>
-            "{verse.text}" <span style={styles.quoteRef}>({verse.ref})</span>
-          </p>
         </div>
       </div>
     </div>
@@ -607,26 +589,5 @@ const styles = {
     fontFamily: "'JetBrains Mono', monospace",
     fontSize: 11.5,
     color: "#5A6B7A",
-  },
-
-  quoteCard: {
-    borderLeft: `3px solid ${BLUE}`,
-    background: "#F5F7FA",
-    borderRadius: "0 10px 10px 0",
-    padding: "16px 18px",
-    marginBottom: 8,
-  },
-  quoteText: {
-    fontSize: 15,
-    lineHeight: 1.6,
-    color: INK,
-    fontStyle: "italic",
-    margin: 0,
-  },
-  quoteRef: {
-    fontFamily: "'JetBrains Mono', monospace",
-    fontSize: 12,
-    color: BLUE,
-    fontStyle: "normal",
   },
 };
