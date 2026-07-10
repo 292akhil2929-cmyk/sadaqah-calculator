@@ -5,6 +5,7 @@ import ClickSpark from "./ClickSpark";
 import GlowCard from "./GlowCard";
 import ShinyButton from "./ShinyButton";
 import InteractiveHoverButton from "./InteractiveHoverButton";
+import MatwHero from "./MatwHero";
 
 /**
  * Sadaqah Jariyah Impact Calculator — MATW brand theme (magenta #f60362 / blue #00a3da)
@@ -34,8 +35,8 @@ import InteractiveHoverButton from "./InteractiveHoverButton";
 const CURRENCY = "$";
 
 // MATW brand palette — sampled directly from the live site's blue nav + magenta band
-const PINK = "#e6007e";
-const BLUE = "#3aa0da";
+const PINK = "#f60362";
+const BLUE = "#00a3da";
 const INK = "#0d1b2a";
 
 // Where "Add to Cart" sends the donor. MATW's cart takes amount + a fund name as
@@ -173,7 +174,9 @@ export default function DonationImpactCalculator() {
   const cartUrl = `${DONATE_BASE_URL}?fund=${FUND_SLUG[mode]}&amount=${amount}`;
 
   return (
-    <div style={styles.page}>
+    <>
+      <MatwHero />
+      <div style={styles.page}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
         * { box-sizing: border-box; }
@@ -347,7 +350,8 @@ export default function DonationImpactCalculator() {
           </GlowCard>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
