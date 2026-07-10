@@ -1,11 +1,15 @@
 "use client";
 
-// A lightweight replica of matwproject.org/sadaqah-jariyah's top section —
-// nav bar, pink promo band, quick-donate bar, and hero — built from the exact
-// brand values sampled off the live site (nav gradient #00a3da → #093484,
-// promo/CTA pink #f60362, quick-donate section #00a3da, card bg #E4F8FF,
-// page bg #e2eff3). Our calculator slots in directly beneath this, in the
-// same spot MATW's own page puts its supporting content.
+// A close replica of matwproject.org/sadaqah-jariyah's top section, built
+// from content and assets pulled directly off the live page:
+//  - Real logo: cdn.matwproject.org/images/general/logo-transparent.png
+//  - Real hero photo (their actual builder.io asset)
+//  - Real headline: "Give Sadaqah Jariyah And Let your deed live on."
+//  - Real nav links (Donate, Give Zakat, Forgotten Ummah, Build a Water Well,
+//    Build a Masjid, ...) with their real hrefs
+//  - Exact brand colors sampled from computed styles: nav gradient
+//    #00a3da → #093484, CTA/price pink #f60362 / #FE278C, link blue #00AEEF,
+//    quick-donate bar #00a3da, card bg #E4F8FF
 export default function MatwHero() {
   return (
     <div style={{ fontFamily: "'Manrope', sans-serif" }}>
@@ -18,47 +22,51 @@ export default function MatwHero() {
           alignItems: "center",
           justifyContent: "space-between",
           flexWrap: "wrap",
-          gap: 12,
+          gap: 14,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div
-            style={{
-              width: 34,
-              height: 34,
-              borderRadius: "50%",
-              border: "2px solid #fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 10,
-              color: "#fff",
-              fontWeight: 800,
-              flexShrink: 0,
-            }}
-          >
-            M
-          </div>
+        <a
+          href="https://matwproject.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}
+        >
+          <img
+            src="https://cdn.matwproject.org/images/general/logo-transparent.png"
+            alt="Muslim Charity MATW"
+            style={{ width: 34, height: 34, objectFit: "contain" }}
+          />
           <span style={{ color: "#fff", fontWeight: 800, fontSize: 13, letterSpacing: "0.02em" }}>
             MATW PROJECT
           </span>
-        </div>
+        </a>
         <div
           style={{
             display: "flex",
-            gap: 20,
+            gap: 18,
             color: "#fff",
             fontWeight: 700,
-            fontSize: 12.5,
+            fontSize: 12,
             flexWrap: "wrap",
           }}
         >
-          <span>GIVE NOW</span>
-          <span>ZAKAT</span>
-          <span>ISLAMIC GIVING</span>
-          <span>ABOUT US</span>
+          <a href="https://matwproject.org/zakat" target="_blank" rel="noopener noreferrer" style={navLink}>
+            Give Zakat
+          </a>
+          <a href="https://matwproject.org/sadaqah-jariyah/build-a-water-well" target="_blank" rel="noopener noreferrer" style={navLink}>
+            Build a Water Well
+          </a>
+          <a href="https://matwproject.org/sadaqah-jariyah/build-a-masjid" target="_blank" rel="noopener noreferrer" style={navLink}>
+            Build a Masjid
+          </a>
+          <a href="https://matwproject.org/forgotten-ummah" target="_blank" rel="noopener noreferrer" style={navLink}>
+            Forgotten Ummah
+          </a>
         </div>
-        <span
+        <a
+          href="https://matwproject.org/top-10"
+          target="_blank"
+          rel="noopener noreferrer"
           style={{
             background: "#f60362",
             color: "#fff",
@@ -66,10 +74,11 @@ export default function MatwHero() {
             fontSize: 12,
             padding: "9px 18px",
             borderRadius: 999,
+            textDecoration: "none",
           }}
         >
           DONATE
-        </span>
+        </a>
       </nav>
 
       {/* Pink promo band */}
@@ -83,7 +92,10 @@ export default function MatwHero() {
           fontWeight: 700,
         }}
       >
-        Gaza: Rebuild What Was Lost — <span style={{ textDecoration: "underline" }}>Learn More</span>
+        Gaza: Rebuild What Was Lost —{" "}
+        <a href="https://matwproject.org/gaza-emergency" target="_blank" rel="noopener noreferrer" style={{ color: "#fff", textDecoration: "underline" }}>
+          Learn More
+        </a>
       </div>
 
       {/* Quick-donate bar */}
@@ -98,79 +110,52 @@ export default function MatwHero() {
           justifyContent: "center",
         }}
       >
-        <div
-          style={{
-            background: "#E4F8FF",
-            borderRadius: 10,
-            padding: "10px 16px",
-            fontSize: 13,
-            color: "#0d1b2a",
-            fontWeight: 700,
-          }}
-        >
+        <div style={{ background: "#E4F8FF", borderRadius: 10, padding: "10px 16px", fontSize: 13, color: "#0d1b2a", fontWeight: 700 }}>
           Amount
         </div>
-        {["$65", "$150", "$200", "$500"].map((v) => (
-          <div
-            key={v}
-            style={{
-              background: "#fff",
-              color: "#f60362",
-              fontWeight: 800,
-              fontSize: 13,
-              padding: "10px 16px",
-              borderRadius: 10,
-            }}
-          >
+        {["£65", "£150", "£200", "£500"].map((v) => (
+          <div key={v} style={{ background: "#fff", color: "#f60362", fontWeight: 800, fontSize: 13, padding: "10px 16px", borderRadius: 10 }}>
             {v}
           </div>
         ))}
-        <div
-          style={{
-            background: "#f60362",
-            color: "#fff",
-            fontWeight: 800,
-            fontSize: 13,
-            padding: "10px 22px",
-            borderRadius: 10,
-          }}
-        >
+        <div style={{ background: "#f60362", color: "#fff", fontWeight: 800, fontSize: 13, padding: "10px 22px", borderRadius: 10 }}>
           QUICK DONATE
         </div>
       </div>
 
-      {/* Hero */}
-      <div
-        style={{
-          background:
-            "radial-gradient(ellipse 120% 100% at 30% 0%, #1a6b8f 0%, #0d3a52 55%, #062338 100%)",
-          padding: "56px 24px 64px",
-          color: "#fff",
-        }}
-      >
-        <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <div
-            style={{
-              fontSize: 12,
-              fontWeight: 700,
-              letterSpacing: "0.25em",
-              marginBottom: 14,
-              color: "#bfeaff",
-            }}
-          >
+      {/* Hero — real photo from the live page */}
+      <div style={{ position: "relative", width: "100%", minHeight: 340, overflow: "hidden", background: "#0d3a52" }}>
+        <img
+          src="https://cdn.builder.io/api/v1/image/assets%2F32b8c354d4bc455dbf10fed3923dfae1%2F6afffbba407d4a17a7d40f88d63fff32"
+          alt="MATW Sadaqah Jariyah"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(180deg, rgba(6,35,56,0.35) 0%, rgba(6,35,56,0.75) 100%)",
+          }}
+        />
+        <div style={{ position: "relative", maxWidth: 720, margin: "0 auto", padding: "64px 24px 56px", color: "#fff" }}>
+          <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.25em", marginBottom: 14, color: "#bfeaff" }}>
             SADAQAH JARIYAH
           </div>
-          <h1 style={{ fontSize: "clamp(34px, 8vw, 64px)", fontWeight: 900, lineHeight: 1.02, margin: 0 }}>
-            Giving that
+          <h1 style={{ fontSize: "clamp(28px, 6vw, 48px)", fontWeight: 900, lineHeight: 1.08, margin: 0 }}>
+            Give Sadaqah Jariyah
             <br />
-            never stops.
+            And let your deed live on.
           </h1>
-          <p style={{ marginTop: 18, fontSize: 15, lineHeight: 1.6, color: "rgba(255,255,255,0.85)", maxWidth: 480 }}>
-            A well, a mosque, a Qur'an handed down — one act of Sadaqah Jariyah keeps paying out
-            reward long after you're gone. See exactly what your donation builds below.
-          </p>
+          <div style={{ display: "flex", gap: 24, marginTop: 24, flexWrap: "wrap" }}>
+            <div>
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", fontWeight: 700, textTransform: "uppercase" }}>Total raised</div>
+              <div style={{ fontSize: 24, fontWeight: 800, color: "#f60362" }}>£65,362 GBP</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
+const navLink = { color: "#fff", textDecoration: "none" };
