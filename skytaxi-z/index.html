@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkyTaxi Z — VIP Flight During The Apocalypse</title>
+<link rel="stylesheet" href="css/hud.css">
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+</script>
+</head>
+<body>
+<canvas id="game-canvas"></canvas>
+
+<!-- ============ HUD (in-mission) ============ -->
+<div id="hud" class="hidden">
+  <!-- top bar -->
+  <div id="hud-top">
+    <div id="objective-box">
+      <div id="objective-title">OBJECTIVE</div>
+      <div id="objective-text">—</div>
+      <div id="dist-text">— km</div>
+    </div>
+    <div id="compass-strip"><div id="compass-tape"></div><div id="compass-caret">▼</div><div id="waypoint-tick">◆</div></div>
+    <div id="money-box"><span id="hud-money">$0</span><span id="hud-combo"></span></div>
+  </div>
+
+  <!-- left cluster: aircraft status -->
+  <div id="hud-left">
+    <div class="bar-label">HULL</div>
+    <div class="bar"><div id="bar-hull" class="bar-fill"></div></div>
+    <div class="bar-label">ENGINE</div>
+    <div class="bar"><div id="bar-engine" class="bar-fill"></div></div>
+    <div class="bar-label">FUEL</div>
+    <div class="bar"><div id="bar-fuel" class="bar-fill"></div></div>
+    <div class="bar-label">BOOST</div>
+    <div class="bar"><div id="bar-boost" class="bar-fill boost"></div></div>
+    <div id="warnings"></div>
+  </div>
+
+  <!-- right cluster: passenger + radar -->
+  <div id="hud-right">
+    <div id="passenger-card">
+      <div id="pax-face">🙂</div>
+      <div id="pax-info"><div id="pax-name">—</div>
+      <div class="bar small"><div id="bar-mood" class="bar-fill mood"></div></div>
+      <div class="bar small"><div id="bar-paxhp" class="bar-fill pax"></div></div></div>
+    </div>
+    <canvas id="radar" width="150" height="150"></canvas>
+    <div id="threat-label">THREAT: <span id="threat-level">LOW</span></div>
+  </div>
+
+  <!-- bottom: weapon / abilities / flight data -->
+  <div id="hud-bottom">
+    <div id="flight-data"><span id="hud-speed">0</span><small>KM/H</small><span id="hud-alt">0</span><small>ALT</small></div>
+    <div id="weapon-box"><div id="weapon-name">—</div><div id="weapon-ammo">∞</div><div id="weapon-slots"></div></div>
+    <div id="abilities">
+      <div class="ability" id="ab-flare"><span>F</span>FLARES<div class="cd"></div></div>
+      <div class="ability" id="ab-barrage"><span>X</span>360° BARRAGE<div class="cd"></div></div>
+      <div class="ability" id="ab-repair"><span>R</span>REPAIR DRONE<div class="cd"></div></div>
+      <div class="ability" id="ab-slowmo"><span>V</span>SLOW-MO<div class="cd"></div></div>
+    </div>
+  </div>
+
+  <div id="crosshair"><div class="ch-dot"></div></div>
+  <div id="pax-bubble" class="hidden"><span id="pax-bubble-name"></span><p id="pax-bubble-text"></p></div>
+  <div id="hit-vignette"></div>
+  <div id="center-msg" class="hidden"></div>
+</div>
+
+<!-- ============ MAIN MENU ============ -->
+<div id="menu-main" class="screen">
+  <div class="menu-inner">
+    <h1 class="title">SKYTAXI <span class="z">Z</span></h1>
+    <p class="subtitle">VIP FLIGHT DURING THE APOCALYPSE</p>
+    <p class="tagline">The world ended. The rich didn't notice. Fly them anyway.</p>
+    <button id="btn-fly" class="btn primary">TAKE A JOB</button>
+    <button id="btn-hangar" class="btn">HANGAR &amp; UPGRADES</button>
+    <button id="btn-howto" class="btn">HOW TO FLY</button>
+    <div id="menu-stats"></div>
+  </div>
+</div>
+
+<!-- ============ HANGAR / UPGRADES ============ -->
+<div id="menu-hangar" class="screen hidden">
+  <div class="menu-inner wide">
+    <h2>HANGAR</h2>
+    <div id="hangar-money">$0</div>
+    <div id="upgrade-list"></div>
+    <button id="btn-hangar-back" class="btn">BACK</button>
+  </div>
+</div>
+
+<!-- ============ MISSION BRIEFING ============ -->
+<div id="menu-brief" class="screen hidden">
+  <div class="menu-inner">
+    <h2>CHARTER REQUEST</h2>
+    <div id="brief-card"></div>
+    <button id="btn-launch" class="btn primary">ACCEPT &amp; TAKE OFF</button>
+    <button id="btn-reroll" class="btn">DECLINE (new client)</button>
+    <button id="btn-brief-back" class="btn">BACK</button>
+  </div>
+</div>
+
+<!-- ============ HOW TO ============ -->
+<div id="menu-howto" class="screen hidden">
+  <div class="menu-inner">
+    <h2>FLIGHT MANUAL</h2>
+    <div class="howto-grid">
+      <div><b>MOUSE</b> steer aircraft</div><div><b>LMB / SPACE</b> fire weapon</div>
+      <div><b>W / S</b> throttle up / down</div><div><b>A / D</b> hard roll (shakes off latchers)</div>
+      <div><b>SHIFT</b> emergency nitro</div><div><b>1–4</b> switch weapon</div>
+      <div><b>F</b> decoy flares</div><div><b>X</b> 360° defensive barrage</div>
+      <div><b>R</b> repair drone</div><div><b>V</b> slow motion</div>
+      <div><b>C</b> camera mode</div><div><b>ESC</b> pause</div>
+    </div>
+    <p class="hint">Smooth flying keeps your VIP happy. Happy VIPs tip. Dead VIPs don't.</p>
+    <button id="btn-howto-back" class="btn">BACK</button>
+  </div>
+</div>
+
+<!-- ============ RESULTS ============ -->
+<div id="menu-results" class="screen hidden">
+  <div class="menu-inner">
+    <h2 id="results-title">FLIGHT COMPLETE</h2>
+    <div id="results-stars"></div>
+    <div id="results-breakdown"></div>
+    <button id="btn-next-job" class="btn primary">NEXT JOB</button>
+    <button id="btn-results-hangar" class="btn">HANGAR</button>
+    <button id="btn-results-menu" class="btn">MAIN MENU</button>
+  </div>
+</div>
+
+<!-- ============ PAUSE ============ -->
+<div id="menu-pause" class="screen hidden">
+  <div class="menu-inner">
+    <h2>PAUSED</h2>
+    <button id="btn-resume" class="btn primary">RESUME</button>
+    <button id="btn-abort" class="btn">ABORT FLIGHT</button>
+  </div>
+</div>
+
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
