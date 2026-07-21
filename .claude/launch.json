@@ -1,0 +1,113 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "remax-zam",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:\\Users\\79akh\\Downloads\\remax-zam-ui", "run", "dev"],
+      "port": 5173
+    },
+    {
+      "name": "forno-pizza",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:\\Users\\79akh\\Downloads\\pizza-brand-website", "run", "dev"],
+      "port": 3000
+    },
+    {
+      "name": "sql-murder-mystery",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:\\Users\\79akh\\Downloads\\sql-murder-mystery", "run", "dev", "--", "--port", "3001"],
+      "port": 3001
+    },
+    {
+      "name": "brave-music-bridge",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["C:\\Users\\79akh\\Downloads\\brave-music-bridge\\server\\server.js"],
+      "port": 8765
+    },
+    {
+      "name": "yanker",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:\\Users\\79akh\\Downloads\\dbs11\\yanker", "run", "dev", "--", "--port", "3002"],
+      "port": 3002
+    },
+    {
+      "name": "codequest",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:\\Users\\79akh\\Downloads\\dbs11\\codequest", "run", "dev", "--", "--port", "3003"],
+      "port": 3003
+    },
+    {
+      "name": "codequest-prod",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:\\Users\\79akh\\Downloads\\dbs11\\codequest", "run", "preview", "--", "--port", "3004"],
+      "port": 3004
+    },
+    {
+      "name": "lattice-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:\\Users\\79akh\\Downloads\\lattice-app", "run", "dev", "--", "--port", "3005"],
+      "port": 3005
+    },
+    {
+      "name": "flatmate",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:\\Users\\79akh\\Downloads\\dbs11\\flatmate", "start"],
+      "port": 3006
+    },
+    {
+      "name": "matw-landing",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "C:\\Users\\79akh\\Downloads\\dbs11\\matw-landing", "-l", "3007"],
+      "port": 3007
+    },
+    {
+      "name": "ecoloop",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:\\Users\\79akh\\Downloads\\dbs11\\ecoloop", "run", "dev", "--", "--port", "3008"],
+      "port": 3008
+    },
+    {
+      "name": "flatmate-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:\\Users\\79akh\\Downloads\\flatmate-web", "run", "dev", "--", "--port", "3009"],
+      "port": 3009
+    },
+    {
+      "name": "dubai-re-analyzer",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:\\Users\\79akh\\Downloads\\dbs11\\dubai-re-analyzer\\client", "run", "dev", "--", "--port", "3010"],
+      "port": 3010
+    },
+    {
+      "name": "aether",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "cd /d C:\\Users\\79akh\\Downloads\\dbs11\\aether && npx next dev -p 3012"],
+      "port": 3012
+    },
+    {
+      "name": "skytaxi-z",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "C:\\Users\\79akh\\Downloads\\dbs11\\skytaxi-z", "-l", "3013"],
+      "port": 3013
+    },
+    {
+      "name": "dubai-quant-engine",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:\\Users\\79akh\\Downloads\\dbs11\\dubai-quant-engine\\frontend", "run", "dev", "--", "--port", "3011"],
+      "port": 3011
+    },
+    {
+      "name": "ali-banat",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "C:\\Users\\79akh\\Downloads\\dbs11", "-l", "3015"],
+      "port": 3015
+    },
+    {
+      "name": "g-theta",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "cd /d C:\\Users\\79akh\\Downloads\\dbs11\\g-theta && npx next dev -p 3020"],
+      "port": 3020
+    }
+  ]
+}
