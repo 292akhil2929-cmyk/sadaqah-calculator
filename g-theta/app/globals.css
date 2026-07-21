@@ -58,11 +58,25 @@ body {
 }
 
 .logo-og {
-  font-family: var(--font-display);
-  letter-spacing: 0.02em;
-  font-style: italic;
-  transform: skewX(-6deg);
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35), 0 0 24px rgba(242, 201, 76, 0.25);
+  font-family: var(--font-marker), var(--font-display);
+  letter-spacing: 0.01em;
+  transform: rotate(-3deg);
+  filter: url(#rough-ink) drop-shadow(0 3px 0 rgba(0, 0, 0, 0.35));
+}
+
+.logo-og .logo-theta {
+  display: inline-block;
+  position: relative;
+}
+.logo-og .logo-tail {
+  position: absolute;
+  right: -0.55em;
+  top: 0.35em;
+  width: 0.6em;
+  height: 0.14em;
+  background: currentColor;
+  transform: rotate(-8deg);
+  border-radius: 999px;
 }
 
 .card-tilt {
