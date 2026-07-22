@@ -1,31 +1,16 @@
-const items = [
-  "FULL LOCAL",
-  "★",
-  "SEMMA SCENE",
-  "★",
-  "CHILL CHEDDAM",
-  "★",
-  "IDLI POWER",
-  "★",
-  "MANAKI TELIYADU",
-  "★",
-  "FULL MASS",
-  "★",
-]
+const words = ["PREMIUM", "LIMITED", "LUXURY", "CRAFTED", "ESSENTIALS", "FUTURE"]
 
 export function Marquee() {
-  const loop = [...items, ...items]
+  const loop = [...words, ...words, ...words, ...words]
   return (
-    <div className="overflow-hidden border-y border-border bg-muted py-3">
-      <div className="marquee-track">
-        {loop.map((item, i) => (
-          <span
-            key={i}
-            className={`mx-4 shrink-0 font-display text-sm font-bold uppercase tracking-widest ${
-              item === "★" ? "text-gold" : "text-muted-foreground"
-            }`}
-          >
-            {item}
+    <div className="marquee-mask relative overflow-hidden border-y border-border/60 py-6">
+      <div className="marquee-track items-baseline">
+        {loop.map((word, i) => (
+          <span key={i} className="mx-6 flex shrink-0 items-baseline gap-12">
+            <span className="font-display text-4xl font-bold uppercase tracking-tight text-chrome sm:text-5xl">
+              {word}
+            </span>
+            <span className="text-electric-gradient text-2xl">✦</span>
           </span>
         ))}
       </div>

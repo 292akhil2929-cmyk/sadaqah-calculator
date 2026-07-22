@@ -39,6 +39,12 @@ export const wishlistLines = [
   "Idi save chేసుకున్నావ్, tarwata teesుకో మరి!",
 ]
 
+export const subscribeLines = [
+  "Subscribe ayyav bidda! Inbox lo kalustham 💌",
+  "Done! Next drop news direct ga nee mail ki 🚀",
+  "Welcome to the family ra! Full updates vastayi 🔔",
+]
+
 export function randomOf(list: string[]): string {
   return list[Math.floor(Math.random() * list.length)]
 }
