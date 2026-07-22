@@ -15,7 +15,7 @@ const HeroCanvas = dynamic(() => import("@/components/three/hero-canvas").then((
   ssr: false,
 })
 
-const FaultyTerminal = dynamic(() => import("@/components/fx/faulty-terminal"), { ssr: false })
+const Aurora = dynamic(() => import("@/components/fx/aurora"), { ssr: false })
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -30,26 +30,12 @@ export function Hero() {
   return (
     <section ref={ref} className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden">
       {/* atmosphere */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-30">
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-80">
         {done && (
-          <FaultyTerminal
-            scale={1}
-            digitSize={1.5}
-            scanlineIntensity={0.3}
-            glitchAmount={1}
-            flickerAmount={1}
-            noiseAmp={0}
-            chromaticAberration={0}
-            dither={0}
-            curvature={0.2}
-            tint="#ffffff"
-            mouseReact
-            mouseStrength={0.2}
-            brightness={1}
-          />
+          <Aurora colorStops={["#4f7cff", "#a855f7", "#4f7cff"]} amplitude={1.1} blend={0.55} speed={0.7} />
         )}
       </div>
-      <AuroraField />
+      <AuroraField dim />
       <DustField count={30} />
       <div
         aria-hidden

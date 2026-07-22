@@ -1,7 +1,10 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import dynamic from "next/dynamic"
 import { motion, useInView } from "motion/react"
+
+const FaultyTerminal = dynamic(() => import("@/components/fx/faulty-terminal"), { ssr: false })
 
 const stats = [
   { value: 500000, format: (n: number) => `${Math.round(n).toLocaleString("en-IN")}+`, label: "Customers" },
@@ -41,8 +44,31 @@ function Counter({ value, format }: { value: number; format: (n: number) => stri
 }
 
 export function Stats() {
+  const ref = useRef<HTMLElement>(null)
+  const inView = useInView(ref, { once: true, margin: "400px" })
+
   return (
-    <section className="relative overflow-hidden border-y border-border/60 py-24">
+    <section ref={ref} className="relative overflow-hidden border-y border-border/60 py-24">
+      {/* CRT terminal backdrop */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 opacity-20">
+        {inView && (
+          <FaultyTerminal
+            scale={1}
+            digitSize={1.5}
+            scanlineIntensity={0.3}
+            glitchAmount={1}
+            flickerAmount={1}
+            noiseAmp={0}
+            chromaticAberration={0}
+            dither={0}
+            curvature={0.2}
+            tint="#ffffff"
+            mouseReact
+            mouseStrength={0.2}
+            brightness={1}
+          />
+        )}
+      </div>
       {/* moving background lines */}
       {[18, 52, 84].map((top, i) => (
         <motion.div
