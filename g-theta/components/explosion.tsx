@@ -32,7 +32,7 @@ export function Explosion() {
         <motion.div style={{ opacity: titleOpacity }} className="relative z-10 mt-24 flex flex-col items-center gap-3 px-6 text-center">
           <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-electric">04 — Anatomy</p>
           <h2 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
-            <span className="text-chrome">Deconstructed.</span>
+            Deconstructed.
           </h2>
           <p className="max-w-sm text-sm text-muted-foreground">
             Scroll to pull the Theta One apart — and put it back together.

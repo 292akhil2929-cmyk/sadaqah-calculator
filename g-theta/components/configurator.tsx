@@ -153,7 +153,7 @@ export function Configurator() {
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-electric">02 — Configure</p>
             <h2 className="mt-2 font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
-              <SplitChars text="THETA ONE" charClassName="text-chrome" stagger={0.04} />
+              <SplitChars text="THETA ONE" stagger={0.04} />
             </h2>
             <p className="mt-3 max-w-md text-muted-foreground">
               One silhouette, obsessively engineered. Pick your colorway, rotate it in real time, and

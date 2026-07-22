@@ -71,7 +71,7 @@ export function CheckoutOverlay() {
               animate={{ rotate: 0, scale: 1 }}
               transition={{ type: "spring", stiffness: 200, damping: 12, delay: 0.15 }}
             >
-              <Logo className="text-6xl" />
+              <Logo className="h-16 w-auto" />
             </motion.div>
             <h2 className="font-display text-2xl font-bold uppercase tracking-wide">
               <span className="text-electric-gradient">Order confirmed</span>

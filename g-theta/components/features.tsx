@@ -84,7 +84,7 @@ export function Features() {
       <div className="mb-14 flex flex-col gap-3">
         <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-electric">05 — Engineering</p>
         <h2 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
-          <span className="text-chrome">Built different.</span>
+          Built different.
         </h2>
       </div>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">

@@ -79,13 +79,6 @@ html.lenis body {
 }
 
 /* ---------- typography treatments ---------- */
-.text-chrome {
-  background: linear-gradient(160deg, #ffffff 0%, #c9cbd4 30%, #7e808c 50%, #d9dbe3 70%, #ffffff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
 .text-electric-gradient {
   background: linear-gradient(120deg, var(--color-electric), var(--color-neon));
   -webkit-background-clip: text;

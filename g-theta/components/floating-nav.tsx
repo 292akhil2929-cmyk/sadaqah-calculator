@@ -51,7 +51,7 @@ export function FloatingNav() {
         transition={{ type: "spring", stiffness: 260, damping: 28 }}
       >
         <button onClick={() => scrollToId("#top")} aria-label="G Theta home" className="flex items-center">
-          <Logo className="text-2xl" />
+          <Logo className="h-7 w-auto" />
         </button>
 
         <nav className="hidden items-center gap-1 md:flex">

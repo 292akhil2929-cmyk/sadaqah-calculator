@@ -106,7 +106,7 @@ export function Showcase() {
       <div className="mb-14 flex flex-col gap-3">
         <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-electric">01 — Collection</p>
         <h2 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
-          <SplitChars text="THE COLLECTION" charClassName="text-chrome" stagger={0.03} />
+          <SplitChars text="THE COLLECTION" stagger={0.03} />
         </h2>
         <p className="max-w-md text-muted-foreground">
           Six colorways. One silhouette. Every piece cut from the same 480 GSM loopback cotton.

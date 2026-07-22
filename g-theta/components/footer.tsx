@@ -25,7 +25,7 @@ export function Footer() {
 
       <div className="relative mx-auto flex max-w-6xl flex-col gap-12 pb-16 md:flex-row md:items-start md:justify-between">
         <div>
-          <Logo className="text-4xl" />
+          <Logo className="h-12 w-auto" />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
             G Theta engineers streetwear from Hyderabad for everywhere. One silhouette at a time,
             obsessively built, deliberately blank.

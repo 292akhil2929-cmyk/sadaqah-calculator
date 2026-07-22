@@ -41,7 +41,7 @@ export function Reviews() {
       <div className="mb-16 flex flex-col gap-3 text-center">
         <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-electric">06 — Reviews</p>
         <h2 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
-          <span className="text-chrome">Worn. Approved.</span>
+          Worn. Approved.
         </h2>
       </div>
 

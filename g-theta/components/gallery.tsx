@@ -66,7 +66,7 @@ export function Gallery() {
       <div className="mb-14 flex flex-col gap-3">
         <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-electric">07 — Gallery</p>
         <h2 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
-          <span className="text-chrome">In the wild.</span>
+          In the wild.
         </h2>
       </div>
 

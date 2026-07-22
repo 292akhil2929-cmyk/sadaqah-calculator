@@ -61,7 +61,7 @@ export function Fabric() {
       <div className="fabric-title absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center">
         <p className="text-[11px] font-semibold uppercase tracking-[0.35em] text-electric">03 — Material</p>
         <h2 className="font-display text-4xl font-bold uppercase tracking-tight sm:text-6xl">
-          <span className="text-chrome">Engineered fabric.</span>
+          Engineered fabric.
           <br />
           Zoom closer.
         </h2>

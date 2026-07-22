@@ -77,7 +77,7 @@ export function PreloaderProvider({ children }: { children: React.ReactNode }) {
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             >
-              <Logo className="text-8xl sm:text-9xl" />
+              <Logo className="h-24 w-auto sm:h-32" />
             </motion.div>
             <div className="flex w-56 flex-col items-center gap-3">
               <div className="h-px w-full overflow-hidden bg-white/10">

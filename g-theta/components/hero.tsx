@@ -59,7 +59,7 @@ export function Hero() {
 
         <h1 className="font-display uppercase leading-[0.94] tracking-tight">
           <span className="block text-5xl sm:text-7xl lg:text-8xl">
-            <SplitChars text="THE FUTURE" trigger={done} delay={0.35} charClassName="text-chrome" />
+            <SplitChars text="THE FUTURE" trigger={done} delay={0.35} />
           </span>
           <span className="block text-5xl sm:text-7xl lg:text-8xl">
             <SplitChars text="OF STREETWEAR" trigger={done} delay={0.75} stagger={0.03} charClassName="text-foreground" />
