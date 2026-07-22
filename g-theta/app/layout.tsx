@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Inter, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "@/components/cart-context"
+import { ClickSpark } from "@/components/fx/click-spark"
 import { CartDrawer } from "@/components/cart-drawer"
 import { CheckoutOverlay } from "@/components/checkout-overlay"
 import { Cursor } from "@/components/cursor"
@@ -34,6 +35,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <CartDrawer />
               <MemeToaster />
               <CheckoutOverlay />
+              <ClickSpark
+                sparkColor="#ffffff"
+                sparkSize={21}
+                sparkRadius={15}
+                sparkCount={8}
+                duration={400}
+                easing="ease-out"
+                extraScale={1}
+              />
               <Cursor />
             </SmoothScroll>
           </PreloaderProvider>
